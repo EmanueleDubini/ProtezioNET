@@ -11,7 +11,7 @@
         android:theme="@style/Theme.ProtezioNET">
         <activity android:name=".MainActivity"></activity>
         <activity
-            android:name="it.insubria.protezionet.Common.SplashActivity"
+            android:name=".SplashActivity"
             android:theme="@style/SplashTheme"> <!-- aggiunta dell'activity SplshActivity per lo splash screen nell'android manifest -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".StatusActivity" />
-        <activity android:name="it.insubria.protezionet.Common.LoginActivity">
+        <activity android:name="it.insubria.protezionet.admin.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
