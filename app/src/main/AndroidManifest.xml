@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".StatusActivity" />
-        <activity android:name="it.insubria.protezionet.admin.LoginActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

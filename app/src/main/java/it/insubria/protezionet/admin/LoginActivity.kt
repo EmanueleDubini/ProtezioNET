@@ -4,8 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import it.insubria.protezionet.admin.MainActivity
-import it.insubria.protezionet.admin.R
 import kotlinx.android.synthetic.main.activity_login.*
 import java.util.regex.Pattern
 

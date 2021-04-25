@@ -1,24 +1,46 @@
 package it.insubria.protezionet.admin
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatDelegate
-import it.insubria.protezionet.admin.databinding.ActivityMainBinding
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.ismaeldivita.chipnavigation.ChipNavigationBar
+
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+
+    private lateinit var chipNavigationBar: ChipNavigationBar
+    private var fragment: Fragment? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_main)
 
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        chipNavigationBar = findViewById(R.id.chipNavigation)
 
-        setUpTabBar()
-    }
+        chipNavigationBar.setItemSelected(R.id.nav_home, true)
+        supportFragmentManager.beginTransaction().replace(R.id.container, HomeFragment()).commit()
 
-    private fun setUpTabBar() {
+        chipNavigationBar.setOnItemSelectedListener(object : ChipNavigationBar.OnItemSelectedListener {
+
+            override fun onItemSelected(i: Int) {
+                when (i) {
+                    R.id.nav_home -> fragment = HomeFragment()
+                    R.id.nav_person -> fragment = PersonFragment()
+                    R.id.nav_event -> fragment = EventFragment()
+                    R.id.nav_truck -> fragment = TruckFragment()
+                    R.id.nav_equipment -> fragment = EquipmentFragment()
+                }
+                if (fragment != null) {
+                    supportFragmentManager.beginTransaction().replace(R.id.container, fragment!!).commit()
+                }
+            }
+        })
+
+
+    }//END_onCreate
+
+    /*private fun setUpTabBar() {
 
         binding.bottomNavBar.setOnItemSelectedListener {
             when (it) {
@@ -38,5 +60,5 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-    }
+    }END_setUpTabBar */
 }
