@@ -8,46 +8,51 @@
     android:padding="8dp"
     tools:context="LoginActivity">
 
-    <CheckBox
-        android:id="@+id/checkBoxAdmin"
-        android:layout_width="151dp"
-        android:layout_height="49dp"
-        android:text="Admin (s/n)"
-        app:layout_constraintBottom_toTopOf="@+id/RegisterButton"
+    <Button
+        android:id="@+id/RegisterButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="200dp"
+        android:text="Registra Utente"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxAdmin" />
+
+    <EditText
+        android:id="@+id/RegisterUsernameField"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        android:hint="@string/Username_it"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/checkBoxAdmin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/RegisterPasswordField" />
 
     <EditText
         android:id="@+id/RegisterPasswordField"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
         android:hint="@string/Password_it"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/checkBoxAdmin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RegisterUsernameField" />
-
-    <EditText
-        android:id="@+id/RegisterUsernameField"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/Username_it"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/RegisterPasswordField"
+        app:layout_constraintBottom_toTopOf="@+id/RegisterUsernameField"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/RegisterButton"
+    <CheckBox
+        android:id="@+id/checkBoxAdmin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Registra Utente"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="100dp"
+        android:text="Admin (s/n)"
+        app:layout_constraintBottom_toTopOf="@+id/RegisterButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxAdmin" />
+        app:layout_constraintTop_toBottomOf="@+id/RegisterUsernameField" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
