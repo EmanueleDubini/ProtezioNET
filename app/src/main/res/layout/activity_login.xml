@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/informazioni"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:padding="8dp"
     tools:context="it.insubria.protezionet.admin.PersonActivity">
@@ -12,8 +12,9 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/Welcome_it"
-        app:layout_constraintBottom_toTopOf="@+id/UsernameField"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -31,18 +32,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
         android:id="@+id/PasswordField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="64dp"
         android:ems="10"
         android:hint="@string/Password_it"
         android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@+id/LogInButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/UsernameField" />
 
@@ -50,10 +52,11 @@
         android:id="@+id/LogInButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="54dp"
         android:onClick="checkLogin"
         android:text="Log In"
-        app:layout_constraintBottom_toTopOf="@+id/imageView2"
+        app:layout_constraintBottom_toTopOf="@+id/Copyright"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,20 +69,9 @@
         android:text="@string/Copyright_it"
         app:layout_constraintBottom_toTopOf="@+id/Authors"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
-    <TextView
-        android:id="@+id/Authors"
-        android:layout_width="wrap_content"
-        android:layout_height="68dp"
-        android:text="@string/Authors"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Copyright"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toBottomOf="@+id/LogInButton" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -91,17 +83,32 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/protezionet" />
 
-    <ImageView
-        android:id="@+id/imageView2"
+    <TextView
+        android:id="@+id/Authors"
         android:layout_width="wrap_content"
-        android:layout_height="119dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/Copyright"
+        android:layout_height="68dp"
+        android:text="@string/Authors"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LogInButton"
-        app:layout_constraintVertical_bias="0.762"
-        app:srcCompat="@drawable/uninsubria_logo_768x768" />
+        app:layout_constraintTop_toBottomOf="@+id/Copyright"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/allerta"
+        android:text="@string/log_in"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/UsernameField"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
