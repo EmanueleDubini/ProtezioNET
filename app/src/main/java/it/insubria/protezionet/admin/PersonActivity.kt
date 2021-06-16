@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_main.*
 import java.util.regex.Pattern
 
 /**
@@ -24,10 +23,10 @@ class PersonActivity : AppCompatActivity() {
     }
         //todo da riga 26 a 61 è lo stesso codice della LoginActivity e non dovrebbe stare in PersonActivity
     fun checkLogin(v: View){
-        val email: String = UsernameField.text.toString()  //binding.UsernameField.text.toString()    //editTextUsername.getText().toString()
+        val email: String = EmailField.text.toString()  //binding.UsernameField.text.toString()    //editTextUsername.getText().toString()
         println("email inserita:$email") //stampa di debug
         if(!isValidEmail(email)){
-            UsernameField.error = resources.getText(R.string.Username_it)       //binding.UsernameField.error = "Invalid Email"                    //editTextUsername.setError("Invalid email")
+            EmailField.error = resources.getText(R.string.Username_it)       //binding.UsernameField.error = "Invalid Email"                    //editTextUsername.setError("Invalid email")
         }
 
         val password = PasswordField.text.toString()   //binding.PasswordField.text.toString()                             //editTextPassword.getText().toString()

@@ -21,13 +21,13 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
-        android:id="@+id/UsernameField"
+        android:id="@+id/EmailField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="@string/Username_it"
-        android:inputType="textPersonName"
+        android:hint="Please enter your E-mail"
+        android:inputType="textPostalAddress"
         app:layout_constraintBottom_toTopOf="@+id/PasswordField"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -42,21 +42,21 @@
         android:ems="10"
         android:hint="@string/Password_it"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/LogInButton"
+        app:layout_constraintBottom_toTopOf="@+id/mRegisterButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/UsernameField" />
+        app:layout_constraintTop_toBottomOf="@+id/EmailField" />
 
     <Button
-        android:id="@+id/LogInButton"
+        android:id="@+id/mRegisterButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:layout_marginBottom="54dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="38dp"
         android:onClick="checkLogin"
         android:text="Log In"
-        app:layout_constraintBottom_toTopOf="@+id/Copyright"
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,12 +66,13 @@
         android:id="@+id/Copyright"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
         android:text="@string/Copyright_it"
         app:layout_constraintBottom_toTopOf="@+id/Authors"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LogInButton" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -106,9 +107,20 @@
         android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/UsernameField"
+        app:layout_constraintBottom_toTopOf="@+id/EmailField"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Here? Create Account"
+        android:textColor="#2962FF"
+        app:layout_constraintBottom_toTopOf="@+id/Copyright"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mRegisterButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

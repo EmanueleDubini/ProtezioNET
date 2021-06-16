@@ -37,10 +37,10 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun checkLogin(v: View) {
-        val email: String = UsernameField.text.toString()  //binding.UsernameField.text.toString()    //editTextUsername.getText().toString()
+        val email: String = EmailField.text.toString()  //binding.UsernameField.text.toString()    //editTextUsername.getText().toString()
         println("email inserita:$email") //stampa di debug
         if (!isValidEmail(email)) {
-            UsernameField.error = getString(R.string.invalid_email)       //binding.UsernameField.error = "Invalid Email"                    //editTextUsername.setError("Invalid email")
+            EmailField.error = getString(R.string.invalid_email)       //binding.UsernameField.error = "Invalid Email"                    //editTextUsername.setError("Invalid email")
         }
 
         val password = PasswordField.text.toString()   //binding.PasswordField.text.toString()                             //editTextPassword.getText().toString()
