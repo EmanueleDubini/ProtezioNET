@@ -15,7 +15,7 @@
         android:layout_marginTop="16dp"
         android:onClick="checkLogin"
         android:text="@string/register"
-        app:layout_constraintBottom_toTopOf="@+id/createText"
+        app:layout_constraintBottom_toTopOf="@+id/goToLoginActivity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mConfirmPassword" />
@@ -72,7 +72,7 @@
         android:ems="10"
         android:hint="Name"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/mEmail"
+        app:layout_constraintBottom_toTopOf="@+id/mEmailRegister"
         app:layout_constraintEnd_toStartOf="@+id/mSurname"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -87,28 +87,28 @@
         android:ems="10"
         android:hint="Surname"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/mEmail"
+        app:layout_constraintBottom_toTopOf="@+id/mEmailRegister"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/mName"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         app:layout_constraintVertical_bias="0.714" />
 
     <EditText
-        android:id="@+id/mEmail"
+        android:id="@+id/mEmailRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:ems="10"
         android:hint="Email"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/mPassword"
+        app:layout_constraintBottom_toTopOf="@+id/mPasswordRegister"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.039"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mName" />
 
     <EditText
-        android:id="@+id/mPassword"
+        android:id="@+id/mPasswordRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
@@ -119,7 +119,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.039"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mEmail"
+        app:layout_constraintTop_toBottomOf="@+id/mEmailRegister"
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
@@ -134,23 +134,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.039"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/mPasswordRegister" />
 
     <TextView
-        android:id="@+id/createText"
+        android:id="@+id/goToLoginActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="8dp"
+        android:onClick="goToLoginActivity"
         android:text="Already Registered? Login here"
         android:textColor="#2962FF"
-        app:layout_constraintBottom_toTopOf="@+id/progressBar"
+        app:layout_constraintBottom_toTopOf="@+id/progressBarRegister"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mRegisterButton" />
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/progressBarRegister"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -159,6 +160,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createText" />
+        app:layout_constraintTop_toBottomOf="@+id/goToLoginActivity" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

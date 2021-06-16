@@ -23,17 +23,17 @@ class PersonActivity : AppCompatActivity() {
     }
         //todo da riga 26 a 61 è lo stesso codice della LoginActivity e non dovrebbe stare in PersonActivity
     fun checkLogin(v: View){
-        val email: String = EmailField.text.toString()  //binding.UsernameField.text.toString()    //editTextUsername.getText().toString()
+        val email: String = mEmailLogin.text.toString()  //binding.UsernameField.text.toString()    //editTextUsername.getText().toString()
         println("email inserita:$email") //stampa di debug
         if(!isValidEmail(email)){
-            EmailField.error = resources.getText(R.string.Username_it)       //binding.UsernameField.error = "Invalid Email"                    //editTextUsername.setError("Invalid email")
+            mEmailLogin.error = resources.getText(R.string.Username_it)       //binding.UsernameField.error = "Invalid Email"                    //editTextUsername.setError("Invalid email")
         }
 
-        val password = PasswordField.text.toString()   //binding.PasswordField.text.toString()                             //editTextPassword.getText().toString()
+        val password = mPasswordLogin.text.toString()   //binding.PasswordField.text.toString()                             //editTextPassword.getText().toString()
         if(!isValidPassword(password)){
             println("password inserita:$password") //stampa di debug
 
-            PasswordField.error = resources.getText(R.string.invalid_password)   //binding.PasswordField.error = "Invalid Password"                 //editTextUsername.setError("Invalid Password")
+            mPasswordLogin.error = resources.getText(R.string.invalid_password)   //binding.PasswordField.error = "Invalid Password"                 //editTextUsername.setError("Invalid Password")
         }
 
         if(isValidEmail(email) && isValidPassword(password)){

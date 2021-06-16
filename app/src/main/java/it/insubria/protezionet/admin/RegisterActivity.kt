@@ -1,29 +1,25 @@
 package it.insubria.protezionet.admin
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
 import android.view.View
-import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_login.mRegisterButton
+import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity : AppCompatActivity() {
 
-    lateinit var mName: EditText
+    /*lateinit var mName: EditText
     lateinit var mSurname: EditText
     lateinit var mEmail: EditText
     lateinit var mPassword: EditText
-    lateinit var mConfirmPassword: EditText
-    lateinit var fAuth: FirebaseAuth
-    lateinit var progressBar: ProgressBar
+    lateinit var mConfirmPassword: EditText*/
+    private lateinit var fAuth: FirebaseAuth
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,72 +32,75 @@ class RegisterActivity : AppCompatActivity() {
         mConfirmPassword = findViewById(R.id.mConfirmPassword)*/
 
         fAuth = FirebaseAuth.getInstance()
-        progressBar = findViewById(R.id.progressBar)
+        progressBar = findViewById(R.id.progressBarRegister)
 
+        //controllo se l'utente e gia loggato, ed accedera direttamente e non mostrera ne la pagina di login ne quella di registrazione
         if(fAuth.currentUser != null){
             val intent = Intent(this@RegisterActivity, MainActivity :: class.java)
             startActivity(intent)
             finish()
         }
 
-        mRegisterButton.setOnClickListener(View.OnClickListener {
-            fun onClick(view: View){
-                var username: String = mName.text.toString()
-                var surname: String = mSurname.text.toString()
-                var email: String = mEmail.text.toString()
-                var password: String = mPassword.text.toString()
-                var confirmPassword: String = mConfirmPassword.text.toString()
+        mRegisterButton.setOnClickListener {
 
-                if(username.isEmpty()){
-                    mName.error = "Name is Required"
-                    return
-                }
+            val username: String = mName.text.toString()
+            val surname: String = mSurname.text.toString()
+            val email: String = mEmailRegister.text.toString()
+            val password: String = mPasswordRegister.text.toString()
+            val confirmPassword: String = mConfirmPassword.text.toString()
 
-                if(surname.isEmpty()){
-                    mSurname.error = "Surname is Required"
-                    return
-                }
+            if (username.isEmpty()) {
+                mName.error = "Name is Required"
+            }
 
-                if(email.isEmpty()){
-                    mEmail.error = "Email is Required"
-                    return
-                }
+            if (surname.isEmpty()) {
+                mSurname.error = "Surname is Required"
+            }
 
-                if(password.isEmpty()){
-                    mPassword.error = "Password is Required"
-                    return
-                }
+            if (email.isEmpty()) {
+                mEmailRegister.error = "Email is Required" //todo aggiungere il controlo come nella fase di login
+            }
 
-                if(confirmPassword.isEmpty()){
-                    mConfirmPassword.error = "Confirm Password is Required"
-                    return
-                }
+            if (password.isEmpty()) {
+                mPasswordRegister.error = "Password is Required"
+            }
 
-                if(password.length < 6){
-                    mPassword.error = "Password Must be >= 6 Characters"
-                    return
-                }
+            if (confirmPassword.isEmpty()) {
+                mConfirmPassword.error = "Confirm Password is Required"
+            }
 
-                if(password != confirmPassword){
-                    mConfirmPassword.error = "Confirm Passwoard not equal to Password"
-                    return
-                }
+            if (password.length < 6) {
+                mPasswordRegister.error = "Password Must be >= 6 Characters"
+            }
 
-                //se tutte le condizioni non sono valide, vuole dire che i deati inseriti dall'utente sono validi e possiamo effettuare la registrazione
+            if (password != confirmPassword) {
+                mConfirmPassword.error = "Confirm Passwoard not equal to Password"
+            }
 
-                fAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener {
+            //avvio la progress bar
+            progressBar.visibility = View.VISIBLE
 
-                    if (it.isSuccessful) {
-                        Toast.makeText(this@RegisterActivity, "User Created", Toast.LENGTH_SHORT).show()
+            //se tutte le condizioni non sono valide, vuole dire che i deati inseriti dall'utente sono validi e possiamo effettuare la registrazione
 
-                        val intent = Intent(this@RegisterActivity, MainActivity :: class.java)
-                        startActivity(intent)
-                    }
-                    else{
-                        Toast.makeText(this@RegisterActivity, "Error ! " + it.exception.toString(), Toast.LENGTH_SHORT).show()
-                    }
+            fAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
+
+                if (it.isSuccessful) {
+                    Toast.makeText(this@RegisterActivity, "User Created", Toast.LENGTH_SHORT).show()
+
+                    //so apre la main activity
+                    val intent = Intent(this@RegisterActivity, MainActivity::class.java)
+                    startActivity(intent)
+                    progressBar.visibility = View.INVISIBLE
+                } else {
+                    Toast.makeText(this@RegisterActivity, "Error ! the password is invalid", Toast.LENGTH_SHORT).show()
+                    progressBar.visibility = View.GONE
                 }
             }
-            })
+
         }
     }
+    fun goToLoginActivity(view: View){
+        val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+        startActivity(intent)
+    }
+}

@@ -1,8 +1,11 @@
 package it.insubria.protezionet.admin
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.google.firebase.auth.FirebaseAuth
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 
 
@@ -39,6 +42,13 @@ class MainActivity : AppCompatActivity() {
 
 
     }//END_onCreate
+
+    fun logOut (view: View){
+        //logout dell'utente
+        FirebaseAuth.getInstance().signOut()
+        val intent = Intent(this@MainActivity, LoginActivity::class.java)
+        startActivity(intent)
+    }
 
     /*private fun setUpTabBar() {
 
