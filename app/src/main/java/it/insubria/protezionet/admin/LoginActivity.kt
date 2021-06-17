@@ -3,12 +3,12 @@ package it.insubria.protezionet.admin
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Patterns
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_register.*
 import java.util.regex.Pattern
 
 /**
@@ -43,34 +43,39 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         fAuth = FirebaseAuth.getInstance()
-        progressBar = findViewById(R.id.progressBarLogin)
+        progressBar = progressBarLogin
 
         // title = TITOLO
     }
 
     fun checkLogin(v: View) {
 
-        val email: String = mEmailLogin.text.toString()   //binding.UsernameField.text.toString()    //editTextUsername.getText().toString()
-        val password: String = mPasswordLogin.text.toString()   //binding.PasswordField.text.toString()                             //editTextPassword.getText().toString()
+        val email: String = mEmailLogin.text.toString() .trim()  //binding.UsernameField.text.toString()    //editTextUsername.getText().toString()
+        val password: String = mPasswordLogin.text.toString().trim()  //binding.PasswordField.text.toString()                             //editTextPassword.getText().toString()
 
 
-        if (email.isEmpty()) {
+        if (email.isEmpty()) { //todo generare le stringhe
             mEmailLogin.error = "Email is Required"
+            mEmailLogin.requestFocus()
         }
 
         else if (password.isEmpty()) {
             mPasswordLogin.error = "Password is Required"
+            mPasswordLogin.requestFocus()
         }
 
 
         else if (password.length < 6) {
             mPasswordLogin.error = "Password Must be greater than 6 Characters"
+            mPasswordLogin.requestFocus()
         }
 
 
 
-        else if (!isValidEmail(email)) {
+        //else if (!isValidEmail(email)) {
+        else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             mEmailLogin.error = getString(R.string.invalid_email)       //binding.UsernameField.error = "Invalid Email"                    //editTextUsername.setError("Invalid email")
+            mEmailLogin.requestFocus()
         }
 
         /*if (!isValidPassword(password)) {
@@ -78,6 +83,8 @@ class LoginActivity : AppCompatActivity() {
 
             PasswordField.error = getString(R.string.invalid_password)   //binding.PasswordField.error = "Invalid Password"                 //editTextUsername.setError("Invalid Password")
         }*/
+
+        //se quello che e stato inserito è tutto corretto
         else {
         //avvio la progress bar
             progressBar.visibility = View.VISIBLE
@@ -100,7 +107,7 @@ class LoginActivity : AppCompatActivity() {
                 // inserito nel file activity_main.xml
 
                 }   else { //todo se si inserisce un email che rispetta il controllo della regex ma non è presente su firebase authentication non succede nulla
-                    Toast.makeText(this@LoginActivity, "Error ! the password is invalid", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@LoginActivity, "Email or Password is incorrect", Toast.LENGTH_SHORT).show()
                     progressBar.visibility = View.GONE
                     }
             }
@@ -110,6 +117,10 @@ class LoginActivity : AppCompatActivity() {
     /*fun isValidPassword(password: String): Boolean {
         return password.length >= 6
     }*/
+
+    fun recoverPassword(view: View){
+
+    }
 
     private fun isValidEmail(email: String): Boolean {
         val emailPattern = ("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")     /*"[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
@@ -124,8 +135,8 @@ class LoginActivity : AppCompatActivity() {
         return matcher.matches()  //se l'indirizzo email soddisfa la reg-ex ritornerà un valore true altrimenti false
     }
 
-    fun goToRegisterActivity(view: View){
+    /*fun goToRegisterActivity(view: View){
         val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
         startActivity(intent)
-    }
+    }*/
 }

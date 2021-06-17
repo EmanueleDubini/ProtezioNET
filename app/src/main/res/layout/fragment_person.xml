@@ -6,52 +6,158 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="8dp"
-    tools:context="LoginActivity">
+    tools:context="it.insubria.protezionet.admin.PersonFragment">
 
     <Button
-        android:id="@+id/mRegisterButton"
+        android:id="@+id/mRegisterButtonFragmentPerson"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Registra Utente"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/register"
+        app:layout_constraintBottom_toTopOf="@+id/progressBarFragmentPerson"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dropDownMenu" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="148dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/protezionet" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/allerta"
+        android:text="@string/register"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Please enter details to register"
+        app:layout_constraintBottom_toTopOf="@+id/mName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.072"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <EditText
+        android:id="@+id/mName"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="7dp"
+        android:layout_marginBottom="12dp"
+        android:ems="10"
+        android:hint="Name"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/mEmailRegister"
+        app:layout_constraintEnd_toStartOf="@+id/mSurname"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <EditText
+        android:id="@+id/mSurname"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:ems="10"
+        android:hint="Surname"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/mEmailRegister"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/mName"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.714" />
+
+    <EditText
+        android:id="@+id/mEmailRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="12dp"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toTopOf="@+id/mPasswordRegister"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mName" />
+
+    <EditText
+        android:id="@+id/mPasswordRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/dropDownMenu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mEmailRegister" />
+
+    <ProgressBar
+        android:id="@+id/progressBarFragmentPerson"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:progressTint="#FF0000"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxAdmin" />
+        app:layout_constraintTop_toBottomOf="@+id/mRegisterButtonFragmentPerson" />
 
-    <EditText
-        android:id="@+id/RegisterUsernameField"
-        android:layout_width="0dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/dropDownMenu"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
-        android:hint="@string/Username_it"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/checkBoxAdmin"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="32dp"
+        android:hint="@string/ruole"
+        app:layout_constraintBottom_toTopOf="@+id/mRegisterButtonFragmentPerson"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RegisterPasswordField" />
+        app:layout_constraintTop_toBottomOf="@+id/mPasswordRegister"
+        app:startIconDrawable="@drawable/ic_person_24">
 
-    <EditText
-        android:id="@+id/RegisterPasswordField"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:hint="@string/Password_it"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/RegisterUsernameField"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <CheckBox
-        android:id="@+id/checkBoxAdmin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
-        android:text="Admin (s/n)"
-        app:layout_constraintBottom_toTopOf="@+id/mRegisterButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RegisterUsernameField" />
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="none"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:text="@string/volunteer" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
