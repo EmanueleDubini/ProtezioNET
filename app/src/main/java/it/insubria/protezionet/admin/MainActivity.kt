@@ -43,13 +43,6 @@ class MainActivity : AppCompatActivity() {
 
     }//END_onCreate
 
-    fun logOut (view: View){
-        //logout dell'utente
-        FirebaseAuth.getInstance().signOut()
-        val intent = Intent(this@MainActivity, LoginActivity::class.java)
-        startActivity(intent)
-    }
-
     /*private fun setUpTabBar() {
 
         binding.bottomNavBar.setOnItemSelectedListener {

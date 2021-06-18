@@ -1,6 +1,6 @@
 package it.insubria.protezionet.admin
 
-import android.os.Bundle
+/*import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_login.*
@@ -57,4 +57,4 @@ class PersonActivity : AppCompatActivity() {
         val matcher = pattern.matcher(email)
         return matcher.matches()  //se l'indirizzo email soddisfa la reg-ex ritornerà un valore true altrimenti false
     }
-}
+}*/

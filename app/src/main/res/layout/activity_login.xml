@@ -27,7 +27,7 @@
         android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Please enter your E-mail"
-        android:inputType="textPostalAddress"
+        android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/mPasswordLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -41,20 +41,20 @@
         android:ems="10"
         android:hint="@string/Password_it"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/mRegisterButton"
+        app:layout_constraintBottom_toTopOf="@+id/mLoginButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mEmailLogin" />
 
     <Button
-        android:id="@+id/mRegisterButton"
+        android:id="@+id/mLoginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:onClick="checkLogin"
         android:text="Log In"
-        app:layout_constraintBottom_toTopOf="@+id/mforgetPassword"
+        app:layout_constraintBottom_toTopOf="@+id/forgotPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -118,19 +118,19 @@
         app:layout_constraintBottom_toTopOf="@+id/Copyright"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mforgetPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/forgotPassword" />
 
     <TextView
-        android:id="@+id/mforgetPassword"
+        android:id="@+id/forgotPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:onClick="recoverPassword"
+        android:onClick="restorePassword"
         android:text="@string/forget_password"
         android:textColor="#2962FF"
         app:layout_constraintBottom_toTopOf="@+id/progressBarLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mRegisterButton" />
+        app:layout_constraintTop_toBottomOf="@+id/mLoginButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
