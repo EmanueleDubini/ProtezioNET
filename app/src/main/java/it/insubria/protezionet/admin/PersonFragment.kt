@@ -1,9 +1,7 @@
 package it.insubria.protezionet.admin
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.health.UidHealthStats
 import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -105,14 +103,14 @@ class PersonFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         //viene eseguito quando il bottone mRegisterButton viene premuto
 
-        val username: String = mName.text.toString().trim()
+        val username: String = eType.text.toString().trim()
         val surname: String = mSurname.text.toString().trim()
-        val email: String = mEmailRegister.text.toString().trim()
-        val password: String = mPasswordRegister.text.toString().trim()
+        val email: String = eState.text.toString().trim()
+        val password: String = eAcquireData.text.toString().trim()
 
         if (username.isEmpty()) { //todo generare le stringhe
-            mName.error = "Name is Required"
-            mName.requestFocus()
+            eType.error = "Name is Required"
+            eType.requestFocus()
         }
 
         else if (surname.isEmpty()) {
@@ -121,24 +119,24 @@ class PersonFragment : Fragment(), View.OnClickListener {
         }
 
         else if (email.isEmpty()) {
-            mEmailRegister.error = "Email is Required"
-            mEmailRegister.requestFocus()
+            eState.error = "Email is Required"
+            eState.requestFocus()
         }
 
         //else if (!isValidEmail(email)) {
         else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            mEmailRegister.error = getString(R.string.invalid_email)
-            mEmailRegister.requestFocus()//binding.UsernameField.error = "Invalid Email"                    //editTextUsername.setError("Invalid email")
+            eState.error = getString(R.string.invalid_email)
+            eState.requestFocus()//binding.UsernameField.error = "Invalid Email"                    //editTextUsername.setError("Invalid email")
         }
 
         else if (password.isEmpty()) {
-            mPasswordRegister.error = "Password is Required"
-            mPasswordRegister.requestFocus()
+            eAcquireData.error = "Password is Required"
+            eAcquireData.requestFocus()
         }
 
         else if (password.length <= 6) {
-            mPasswordRegister.error = "Password Must be greater than 6 Characters"
-            mPasswordRegister.requestFocus()
+            eAcquireData.error = "Password Must be greater than 6 Characters"
+            eAcquireData.requestFocus()
         }
 
         //se quello che e stato inserito è tutto corretto

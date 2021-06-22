@@ -54,14 +54,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="Please enter details to register equipment"
-        app:layout_constraintBottom_toTopOf="@+id/mName"
+        app:layout_constraintBottom_toTopOf="@+id/eType"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.072"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:id="@+id/mName"
+        android:id="@+id/eType"
         android:layout_width="175dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -69,14 +69,14 @@
         android:ems="10"
         android:hint="Type"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/mEmailRegister"
+        app:layout_constraintBottom_toTopOf="@+id/eState"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.067"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <EditText
-        android:id="@+id/mEmailRegister"
+        android:id="@+id/eState"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -84,14 +84,14 @@
         android:ems="10"
         android:hint="State"
         android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/mPasswordRegister"
+        app:layout_constraintBottom_toTopOf="@+id/eAcquireData"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mName" />
+        app:layout_constraintTop_toBottomOf="@+id/eType" />
 
     <EditText
-        android:id="@+id/mPasswordRegister"
+        android:id="@+id/eAcquireData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
