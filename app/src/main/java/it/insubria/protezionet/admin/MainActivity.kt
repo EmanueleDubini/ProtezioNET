@@ -1,11 +1,8 @@
 package it.insubria.protezionet.admin
 
-import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.google.firebase.auth.FirebaseAuth
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 
 
@@ -26,8 +23,8 @@ class MainActivity : AppCompatActivity() {
 
         chipNavigationBar.setOnItemSelectedListener(object : ChipNavigationBar.OnItemSelectedListener {
 
-            override fun onItemSelected(i: Int) {
-                when (i) {
+            override fun onItemSelected(id: Int) {
+                when (id) {
                     R.id.nav_home -> fragment = HomeFragment()
                     R.id.nav_person -> fragment = PersonFragment()
                     R.id.nav_event -> fragment = EventFragment()
