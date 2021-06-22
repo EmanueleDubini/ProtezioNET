@@ -51,14 +51,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/please_enter_details_to_register"
-        app:layout_constraintBottom_toTopOf="@+id/mName"
+        app:layout_constraintBottom_toTopOf="@+id/eventType"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.072"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:id="@+id/mName"
+        android:id="@+id/eventType"
         android:layout_width="175dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -67,7 +67,7 @@
         android:ems="10"
         android:hint="@string/name"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/mEmailRegister"
+        app:layout_constraintBottom_toTopOf="@+id/eventCity"
         app:layout_constraintEnd_toStartOf="@+id/mSurname"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -83,14 +83,14 @@
         android:ems="10"
         android:hint="@string/surname"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/mEmailRegister"
+        app:layout_constraintBottom_toTopOf="@+id/eventCity"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/mName"
+        app:layout_constraintStart_toEndOf="@+id/eventType"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         app:layout_constraintVertical_bias="0.714" />
 
     <EditText
-        android:id="@+id/mEmailRegister"
+        android:id="@+id/eventCity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -98,14 +98,14 @@
         android:ems="10"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/mPasswordRegister"
+        app:layout_constraintBottom_toTopOf="@+id/eventSeverity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mName" />
+        app:layout_constraintTop_toBottomOf="@+id/eventType" />
 
     <EditText
-        android:id="@+id/mPasswordRegister"
+        android:id="@+id/eventSeverity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -116,7 +116,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mEmailRegister" />
+        app:layout_constraintTop_toBottomOf="@+id/eventCity" />
 
     <ProgressBar
         android:id="@+id/progressBarFragmentPerson"
@@ -141,7 +141,7 @@
         android:hint="@string/ruole"
         app:layout_constraintBottom_toTopOf="@+id/mRegisterButtonFragmentPerson"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mPasswordRegister"
+        app:layout_constraintTop_toBottomOf="@+id/eventSeverity"
         app:startIconDrawable="@drawable/ic_person_24">
 
         <AutoCompleteTextView
