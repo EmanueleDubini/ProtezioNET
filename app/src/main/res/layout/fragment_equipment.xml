@@ -54,14 +54,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="Please enter details to register equipment"
-        app:layout_constraintBottom_toTopOf="@+id/eType"
+        app:layout_constraintBottom_toTopOf="@+id/equipmentType"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.072"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:id="@+id/eType"
+        android:id="@+id/equipmentType"
         android:layout_width="175dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -69,14 +69,14 @@
         android:ems="10"
         android:hint="Type"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/eState"
+        app:layout_constraintBottom_toTopOf="@+id/equipmentState"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.067"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <EditText
-        android:id="@+id/eState"
+        android:id="@+id/equipmentState"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -84,14 +84,14 @@
         android:ems="10"
         android:hint="State"
         android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/eAcquireData"
+        app:layout_constraintBottom_toTopOf="@+id/equipmentAcquireData"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eType" />
+        app:layout_constraintTop_toBottomOf="@+id/equipmentType" />
 
     <EditText
-        android:id="@+id/eAcquireData"
+        android:id="@+id/equipmentAcquireData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"

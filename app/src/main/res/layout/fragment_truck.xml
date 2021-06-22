@@ -54,14 +54,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="Please enter details to register an truck"
-        app:layout_constraintBottom_toTopOf="@+id/eType"
+        app:layout_constraintBottom_toTopOf="@+id/truckType"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.072"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:id="@+id/eType"
+        android:id="@+id/truckType"
         android:layout_width="175dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -69,14 +69,14 @@
         android:ems="10"
         android:hint="Model"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/eState"
+        app:layout_constraintBottom_toTopOf="@+id/truckPlate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.067"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <EditText
-        android:id="@+id/eState"
+        android:id="@+id/truckPlate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -84,14 +84,14 @@
         android:ems="10"
         android:hint="Plate"
         android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/eAcquireData"
+        app:layout_constraintBottom_toTopOf="@+id/truckAcquiredata"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eType" />
+        app:layout_constraintTop_toBottomOf="@+id/truckType" />
 
     <EditText
-        android:id="@+id/eAcquireData"
+        android:id="@+id/truckAcquiredata"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
