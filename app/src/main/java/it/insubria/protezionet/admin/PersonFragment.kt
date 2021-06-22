@@ -103,14 +103,14 @@ class PersonFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         //viene eseguito quando il bottone mRegisterButton viene premuto
 
-        val username: String = eType.text.toString().trim()
+        val username: String = eventType.text.toString().trim()
         val surname: String = mSurname.text.toString().trim()
-        val email: String = eState.text.toString().trim()
-        val password: String = eAcquireData.text.toString().trim()
+        val email: String = eventCity.text.toString().trim()
+        val password: String = eventSeverity.text.toString().trim()
 
         if (username.isEmpty()) { //todo generare le stringhe
-            eType.error = "Name is Required"
-            eType.requestFocus()
+            eventType.error = "Name is Required"
+            eventType.requestFocus()
         }
 
         else if (surname.isEmpty()) {
@@ -119,24 +119,24 @@ class PersonFragment : Fragment(), View.OnClickListener {
         }
 
         else if (email.isEmpty()) {
-            eState.error = "Email is Required"
-            eState.requestFocus()
+            eventCity.error = "Email is Required"
+            eventCity.requestFocus()
         }
 
         //else if (!isValidEmail(email)) {
         else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            eState.error = getString(R.string.invalid_email)
-            eState.requestFocus()//binding.UsernameField.error = "Invalid Email"                    //editTextUsername.setError("Invalid email")
+            eventCity.error = getString(R.string.invalid_email)
+            eventCity.requestFocus()//binding.UsernameField.error = "Invalid Email"                    //editTextUsername.setError("Invalid email")
         }
 
         else if (password.isEmpty()) {
-            eAcquireData.error = "Password is Required"
-            eAcquireData.requestFocus()
+            eventSeverity.error = "Password is Required"
+            eventSeverity.requestFocus()
         }
 
         else if (password.length <= 6) {
-            eAcquireData.error = "Password Must be greater than 6 Characters"
-            eAcquireData.requestFocus()
+            eventSeverity.error = "Password Must be greater than 6 Characters"
+            eventSeverity.requestFocus()
         }
 
         //se quello che e stato inserito è tutto corretto
