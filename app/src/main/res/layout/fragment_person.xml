@@ -12,11 +12,13 @@
         android:id="@+id/mRegisterButtonFragmentPerson"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="18dp"
         android:text="@string/registerUser"
         app:layout_constraintBottom_toTopOf="@+id/progressBarFragmentPerson"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dropDownMenu" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -128,7 +130,8 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mRegisterButtonFragmentPerson" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/dropDownMenu"

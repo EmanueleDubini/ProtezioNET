@@ -13,7 +13,7 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import it.insubria.protezionet.Common.Person
+import it.insubria.protezionet.common.Person
 import kotlinx.android.synthetic.main.fragment_person.*
 import kotlinx.android.synthetic.main.fragment_person.view.*
 import java.util.regex.Pattern
@@ -172,7 +172,7 @@ class PersonFragment : Fragment(), View.OnClickListener {
                                 }
                             }
                     }else{
-                        Toast.makeText(activity, "Failed to registter! Try again!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, "Failed to register! Try again!", Toast.LENGTH_SHORT).show()
                         progressBar.visibility = View.GONE
                     }
 

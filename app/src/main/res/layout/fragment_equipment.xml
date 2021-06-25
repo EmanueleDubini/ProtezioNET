@@ -9,15 +9,17 @@
     tools:context="it.insubria.protezionet.admin.PersonFragment">
 
     <Button
-        android:id="@+id/mRegisterButtonFragmentPerson"
+        android:id="@+id/mRegisterButtonFragmentEquipment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginBottom="18dp"
         android:text="@string/registerEquipment"
-        app:layout_constraintBottom_toTopOf="@+id/progressBarFragmentPerson"
+        app:layout_constraintBottom_toTopOf="@+id/progressBarFragmentEquipment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/equipmentAcquireData" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -79,30 +81,31 @@
         android:layout_marginStart="10dp"
         android:layout_marginBottom="12dp"
         android:ems="10"
-        android:hint="State"
-        android:inputType="textEmailAddress"
+        android:hint="State %"
+        android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/equipmentAcquireData"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.041"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/equipmentType" />
 
     <EditText
         android:id="@+id/equipmentAcquireData"
-        android:layout_width="wrap_content"
+        android:layout_width="218dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginBottom="44dp"
         android:ems="10"
-        android:hint="Acquire Data"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/mRegisterButtonFragmentPerson"
+        android:hint="@string/acquire_data_dd_mm_aaaa"
+        android:inputType="date"
+        app:layout_constraintBottom_toTopOf="@+id/mRegisterButtonFragmentEquipment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/equipmentState" />
 
     <ProgressBar
-        android:id="@+id/progressBarFragmentPerson"
+        android:id="@+id/progressBarFragmentEquipment"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -112,6 +115,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mRegisterButtonFragmentEquipment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

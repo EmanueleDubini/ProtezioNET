@@ -9,15 +9,17 @@
     tools:context="it.insubria.protezionet.admin.PersonFragment">
 
     <Button
-        android:id="@+id/mRegisterButtonFragmentPerson"
+        android:id="@+id/mRegisterButtonFragmentTruck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginBottom="18dp"
         android:text="@string/registerTruck"
         app:layout_constraintBottom_toTopOf="@+id/progressBarFragmentPerson"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/truckColor" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -81,25 +83,27 @@
         android:ems="10"
         android:hint="Plate"
         android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/truckAcquiredata"
+        app:layout_constraintBottom_toTopOf="@+id/truckColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/truckType" />
 
     <EditText
-        android:id="@+id/truckAcquiredata"
+        android:id="@+id/truckColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="12dp"
         android:layout_marginBottom="44dp"
         android:ems="10"
-        android:hint="Acquire Data"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/mRegisterButtonFragmentPerson"
+        android:hint="Color"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/mRegisterButtonFragmentTruck"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/truckPlate" />
 
     <ProgressBar
         android:id="@+id/progressBarFragmentPerson"
@@ -112,6 +116,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mRegisterButtonFragmentTruck" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,13 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
-import android.widget.Button
 import android.widget.ProgressBar
-import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import it.insubria.protezionet.Common.ForgotPassword
+import it.insubria.protezionet.common.ForgotPassword
 import kotlinx.android.synthetic.main.activity_login.*
 import java.util.regex.Pattern
 
