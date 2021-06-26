@@ -79,7 +79,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(activity, "Spmething wrong happened!", Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, "Something wrong happened!", Toast.LENGTH_LONG).show()
 
             }
         })
