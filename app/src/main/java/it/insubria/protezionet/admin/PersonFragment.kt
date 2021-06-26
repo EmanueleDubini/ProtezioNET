@@ -58,10 +58,15 @@ class PersonFragment : Fragment(), View.OnClickListener {
     override fun onResume(){
         super.onResume()
 
-        //adapter per il dropdown menu
-        val ruoli = resources.getStringArray(R.array.ruole)
-        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, ruoli)
-        view?.autoCompleteTextView?.setAdapter(arrayAdapter)
+        //adapter per il dropdown menu ruoli
+        val ruoli = resources.getStringArray(R.array.roleList)
+        val arrayAdapterRuoli = ArrayAdapter(requireContext(), R.layout.dropdown_item_role, ruoli)
+        view?.autoCompleteTextViewRole?.setAdapter(arrayAdapterRuoli)
+
+        //adapter per il dropdown menu team
+        val teams = resources.getStringArray(R.array.teamList)
+        val arrayAdapterTeams = ArrayAdapter(requireContext(), R.layout.dropdown_item_team, teams)
+        view?.autoCompleteTextViewTeam?.setAdapter(arrayAdapterTeams)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -103,40 +108,40 @@ class PersonFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         //viene eseguito quando il bottone mRegisterButton viene premuto
 
-        val username: String = eventType.text.toString().trim()
-        val surname: String = mSurname.text.toString().trim()
-        val email: String = eventCity.text.toString().trim()
-        val password: String = eventSeverity.text.toString().trim()
+        val username: String = personName.text.toString().trim()
+        val surname: String = personSurname.text.toString().trim()
+        val email: String = personEmail.text.toString().trim()
+        val password: String = personPassword.text.toString().trim()
 
         if (username.isEmpty()) { //todo generare le stringhe
-            eventType.error = "Name is Required"
-            eventType.requestFocus()
+            personName.error = "Name is Required"
+            personName.requestFocus()
         }
 
         else if (surname.isEmpty()) {
-            mSurname.error = "Surname is Required"
-            mSurname.requestFocus()
+            personSurname.error = "Surname is Required"
+            personSurname.requestFocus()
         }
 
         else if (email.isEmpty()) {
-            eventCity.error = "Email is Required"
-            eventCity.requestFocus()
+            personEmail.error = "Email is Required"
+            personEmail.requestFocus()
         }
 
         //else if (!isValidEmail(email)) {
         else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            eventCity.error = getString(R.string.invalid_email)
-            eventCity.requestFocus()//binding.UsernameField.error = "Invalid Email"                    //editTextUsername.setError("Invalid email")
+            personEmail.error = getString(R.string.invalid_email)
+            personEmail.requestFocus()//binding.UsernameField.error = "Invalid Email"                    //editTextUsername.setError("Invalid email")
         }
 
         else if (password.isEmpty()) {
-            eventSeverity.error = "Password is Required"
-            eventSeverity.requestFocus()
+            personPassword.error = "Password is Required"
+            personPassword.requestFocus()
         }
 
         else if (password.length <= 6) {
-            eventSeverity.error = "Password Must be greater than 6 Characters"
-            eventSeverity.requestFocus()
+            personPassword.error = "Password Must be greater than 6 Characters"
+            personPassword.requestFocus()
         }
 
         //se quello che e stato inserito è tutto corretto
@@ -155,10 +160,13 @@ class PersonFragment : Fragment(), View.OnClickListener {
                     //Toast.makeText(activity, "User Created", Toast.LENGTH_SHORT).show()
 
                     //leggo quello che e stato selezionato come ruolo dall'interfaccia utente
-                    val ruolo = autoCompleteTextView.text.toString()
+                    val ruolo = autoCompleteTextViewRole.text.toString()
+
+                    //leggo il team, quello che e stato selezionato come ruolo dall'interfaccia utente
+                    val team = autoCompleteTextViewTeam.text.toString()
 
                     //genero l'utente da salvare nel database
-                    val user = Person(username, surname, email, password, ruolo)
+                    val user = Person(username, surname, email, password, ruolo, team)
                     //salvo l' id delll'utente corrente che ha effettuato il login nell'app
                     val currentUser : String? = FirebaseAuth.getInstance().currentUser?.uid
 
