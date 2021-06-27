@@ -5,7 +5,7 @@
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_home_24"
         android:title="@string/home_bottom_bar"
-        app:cnb_iconColor="#2196F3"
+        app:cnb_iconColor="@color/purple_500"
         />
 
     <item
@@ -19,6 +19,12 @@
         android:icon="@drawable/ic_event_24"
         android:title="@string/event_bottom_bar"
         app:cnb_iconColor="#4CAF50"/>
+
+    <item
+        android:id="@+id/nav_team"
+        android:icon="@drawable/ic_baseline_groups_24"
+        android:title="@string/event_bottom_bar"
+        app:cnb_iconColor="#00B8D4"/>
 
     <item
         android:id="@+id/nav_truck"

@@ -144,6 +144,10 @@ class PersonFragment : Fragment(), View.OnClickListener {
             personPassword.requestFocus()
         }
 
+        else if (false) {
+        //todo aggiungere il controllo che venga selezionato un team tra quelli disponibili
+        }
+
         //se quello che e stato inserito è tutto corretto
         else {
 
