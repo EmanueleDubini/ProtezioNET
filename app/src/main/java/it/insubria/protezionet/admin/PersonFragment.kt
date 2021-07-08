@@ -113,7 +113,7 @@ class PersonFragment : Fragment(), View.OnClickListener {
         val email: String = personEmail.text.toString().trim()
         val password: String = personPassword.text.toString().trim()
 
-        if (username.isEmpty()) { //todo generare le stringhe
+        if (username.isEmpty()) {
             personName.error = getString(R.string.name_is_required)
             personName.requestFocus()
         }
