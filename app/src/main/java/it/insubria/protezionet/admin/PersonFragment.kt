@@ -114,17 +114,17 @@ class PersonFragment : Fragment(), View.OnClickListener {
         val password: String = personPassword.text.toString().trim()
 
         if (username.isEmpty()) { //todo generare le stringhe
-            personName.error = "Name is Required"
+            personName.error = getString(R.string.name_is_required)
             personName.requestFocus()
         }
 
         else if (surname.isEmpty()) {
-            personSurname.error = "Surname is Required"
+            personSurname.error = getString(R.string.surname_is_required)
             personSurname.requestFocus()
         }
 
         else if (email.isEmpty()) {
-            personEmail.error = "Email is Required"
+            personEmail.error = getString(R.string.email_is_required)
             personEmail.requestFocus()
         }
 
@@ -135,12 +135,12 @@ class PersonFragment : Fragment(), View.OnClickListener {
         }
 
         else if (password.isEmpty()) {
-            personPassword.error = "Password is Required"
+            personPassword.error = getString(R.string.pasword_is_required)
             personPassword.requestFocus()
         }
 
         else if (password.length <= 6) {
-            personPassword.error = "Password Must be greater than 6 Characters"
+            personPassword.error = getString(R.string.password_not_aceptable)
             personPassword.requestFocus()
         }
 
