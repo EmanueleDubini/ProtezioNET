@@ -23,7 +23,7 @@
     <item
         android:id="@+id/nav_team"
         android:icon="@drawable/ic_baseline_groups_24"
-        android:title="@string/event_bottom_bar"
+        android:title="@string/team"
         app:cnb_iconColor="#00B8D4"/>
 
     <item

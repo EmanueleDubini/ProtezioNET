@@ -1,5 +1,6 @@
 package it.insubria.protezionet.admin
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,9 @@ import androidx.appcompat.widget.AppCompatSpinner
 import androidx.fragment.app.Fragment
 import com.google.firebase.database.*
 import it.insubria.protezionet.common.Person
+import it.insubria.protezionet.common.Team
+import kotlinx.android.synthetic.main.fragment_person.*
+import kotlinx.android.synthetic.main.fragment_team.*
 import java.util.*
 
 
@@ -37,7 +41,7 @@ class TeamFragment : Fragment(), View.OnClickListener {
 
     var allpersonReadFromDB : ArrayList<Person> = ArrayList() //quando viene fatta la lettura da db di tutti i volontari presenti in person vengono inseriti tutti dentro qui per tenerli in memoria
 
-    var teamMemberList: ArrayList<Person> = ArrayList<Person>() //lista delle persone che poi andranno a formare un team
+    var teamMemberList: ArrayList<Person> = ArrayList<Person>() //lista delle persone che poi andranno a formare un team e che saranno lette dalla grafica per essere scritte nel db
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,7 +72,9 @@ class TeamFragment : Fragment(), View.OnClickListener {
         reference.addListenerForSingleValueEvent(object : ValueEventListener {
 
             override fun onDataChange(snapshot: DataSnapshot) {
-                allpersonReadFromDB.clear() //prima di inserire i nuovi valori, nel caso non sia la prima volta che questo video sia eseguito, pulisco l'arraylist che contiene tutte le persone lette
+                //prima di inserire i nuovi valori, nel caso non sia la prima volta che questo video sia eseguito, pulisco l'arraylist che contiene tutte le persone lette
+                allpersonReadFromDB.clear()
+
                 for (dSnapshot in snapshot.children) {
                     val person = dSnapshot.getValue(Person::class.java)
                     /*val nome = dSnapshot.child("nome").getValue(String::class.java)//.child("username").getValue<String>(String::class.java)
@@ -117,7 +123,40 @@ class TeamFragment : Fragment(), View.OnClickListener {
             R.id.button_add -> addView()
             R.id.mRegisterButtonTeam -> if (checkIfValidAndRead()) {
 
-                //todo dovrei leggere tutto e inviare al db
+                //nome del team letto dalla grafica
+                val nomeTeam: String = TeamName.text.toString().trim()
+
+                //todo prima di creare listanza da scrivere bisogna modificare i valori nel campo Team, delle varie persone che compongono il team specificando che appartengono al team che si sta scrivendo
+                //se sono gia in un team o si permette di partecipare a piu team altrimenti si aggiunge al nuovo team e si elimina da quello vecchio
+
+                //todo decidere come portare avanti tutto perchè anche nella finestra person bisogna specificare il team di cui fa parte una persona, io toglierei il campo team dalla finestra person
+                //al massimo farei che se si deve aggiungere una persona gia esistente ad un team si deve fare una finestra a parte oppure bisogna creare il nuovo team da zero
+
+                //istanza di team da scrivere nel database
+                val team: Team = Team(nomeTeam, teamMemberList)
+
+
+
+                //todo dovrei leggere tutto quello presente nel campo per specificare il nome del team e inviare al db quello e aggiungendo tutte le persone in teammemberList
+
+                FirebaseDatabase.getInstance().getReference("squadre")
+                    .child(nomeTeam).setValue(team).addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            Toast.makeText(activity, "User has been registered sucessfully ", Toast.LENGTH_LONG).show()
+                            //todo aggiungere progressBar alla grafica
+                            //progressBar.visibility = View.GONE
+                        }
+                        else{
+                            Toast.makeText(activity, "Failed to register! Try again!", Toast.LENGTH_SHORT).show()
+                            //todo aggiungere progressBar alla grafica
+                            //progressBar.visibility = View.GONE
+                        }
+                    }
+
+            //si apre la main activity
+                val intent = Intent(activity, MainActivity::class.java)
+            startActivity(intent)
+
                 //apro l'activity che mostra le persone inserite
                 /*val intent = Intent(activity, ActivityCricketers::class.java)
                 val bundle = Bundle() //passo le prsone tramite l'intent
@@ -131,9 +170,22 @@ class TeamFragment : Fragment(), View.OnClickListener {
     }
 
     private fun checkIfValidAndRead(): Boolean {
+        //svuota l'arraylist  che contiene le info lette dalla grafica per scriverle sul db
         teamMemberList.clear()
+
         var result = true
         var valoreLetto: String
+
+        //verifico che il nome del team sia specificato
+        if (TeamName.text.toString().trim().isEmpty()) {
+            //se non viene specificato il nome del team
+            Toast.makeText(activity, "Insert Team Name!", Toast.LENGTH_SHORT).show()
+            result = false
+            return result
+        }
+
+
+        //ciclo for sul linearLayout che contiene le righe che si aggiungono per inserire un nuovo componente del team
         for (i in 0 until layoutList.childCount) {
             val teamMemberView = layoutList.getChildAt(i)
 
@@ -141,7 +193,8 @@ class TeamFragment : Fragment(), View.OnClickListener {
             //val editTextSurname = teamMemberView.findViewById<View>(R.id.edit_team_member_surname) as EditText //editText ceh contiene il cognome della persona
 
             //nello spinner sono mostrati tutti i volontari presenti nel db, 'nome cognome - ruolo'
-            val spinnerTeamMember = teamMemberView.findViewById<View>(R.id.spinner_team) as AppCompatSpinner //dropDown menu che fa scegliere il componenten del team
+            //dropDown menu che fa scegliere il componenten del team
+            val spinnerTeamMember = teamMemberView.findViewById<View>(R.id.spinner_team) as AppCompatSpinner
 
 
             /////////questa parte non serve perchè noi selezioniamo tramite il dropdown menu
@@ -151,31 +204,36 @@ class TeamFragment : Fragment(), View.OnClickListener {
                 result = false
                 break
             }*/
+
             //lettura della persona selezionata dallo spinner
             if (spinnerTeamMember.selectedItemPosition != 0) {
                 //person.setTeamName(teamList[spinnerTeam.selectedItemPosition]) //scrive il nome del team nell'istanza della persona
                 valoreLetto = teamList[spinnerTeamMember.selectedItemPosition]
 
                 val valoriLettura = valoreLetto.split(" ")
+                //nome, cognome e ruolo della persona contenuta nella riga
                 val nome = valoriLettura[0]
                 val cognome = valoriLettura[1] //la posizione due viene saltata perche contiene '-' ---> nome cognome - ruolo
                 val ruolo = valoriLettura[3]
 
                 for (persona in allpersonReadFromDB) {//persona contiene tutti gli oggetti Person presenti sul db
+                //scorro tutti gli elementi di allpersonReadFromDatabase, quindi al primo ciclo la variabile persona contiene il primo elemento Person contenuto nell'arraylist allpersonreadFromDB e cosi via
 
                     if (persona.nome == nome && persona.cognome == cognome && persona.ruolo == ruolo){
-                        teamMemberList.add(persona) //aggiunge la persona alla lista delle persone inserite nella finestra
+                        //quando persona corrisponde al volontario selezionato nella grafica
+                        teamMemberList.add(persona) //aggiunge la persona alla lista delle persone da inserire nel database come componenti del team
                     }
                 }
             } else {
+                //eseguiuto se una riga di un membro non è selezionata con un nome di una persona letta dal db
                 result = false
                 break
             }
-            //lista che contiene tutte le persone che compongono la squadra
         }
+        //lista che contiene tutte le persone che compongono la squadra
         if (teamMemberList.size == 0) { //in caso vengano compilati in modo errato i campi
             result = false
-            Toast.makeText(activity, "Add Team Member First!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, "Add Team Member!", Toast.LENGTH_SHORT).show()
         } else if (!result) {
             Toast.makeText(activity, "Enter All Details Correctly!", Toast.LENGTH_SHORT).show()
         }
