@@ -138,11 +138,12 @@ class TeamFragment : Fragment(), View.OnClickListener {
                 //nome del team letto dalla grafica
                 val nomeTeam: String = TeamName.text.toString().trim()
 
-                //todo prima di creare listanza da scrivere bisogna modificare i valori nel campo Team, delle varie persone che compongono il team specificando che appartengono al team che si sta scrivendo
-                //se sono gia in un team o si permette di partecipare a piu team altrimenti si aggiunge al nuovo team e si elimina da quello vecchio
+                //todo prima di creare l'istanza da scrivere bisogna modificare i valori nel campo Team, delle varie persone che compongono il team specificando che appartengono al team che si sta scrivendo
+                //se sono gia in un team o si permette di partecipare a piu team altrimenti si aggiunge al nuovo team e si elimina da quello vecchio --> le persone possono partecipare a piu team
 
                 //todo decidere come portare avanti tutto perchè anche nella finestra person bisogna specificare il team di cui fa parte una persona, io toglierei il campo team dalla finestra person
                 //al massimo farei che se si deve aggiungere una persona gia esistente ad un team si deve fare una finestra a parte oppure bisogna creare il nuovo team da zero
+                //--> si elimina il team e se ricrea uno nuovo
 
                 //istanza di team da scrivere nel database
                 val team= Team(nomeTeam, teamMemberList)

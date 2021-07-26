@@ -194,7 +194,7 @@ class PersonFragment : Fragment(), View.OnClickListener {
                     startActivity(intent)
 
                 } else {
-                    Toast.makeText(activity, "Error! A user may already be registered with this email", Toast.LENGTH_SHORT)
+                    Toast.makeText(activity, getString(R.string.Error_just_registered), Toast.LENGTH_SHORT)
                         .show()
                     progressBar.visibility = View.GONE
                 }
