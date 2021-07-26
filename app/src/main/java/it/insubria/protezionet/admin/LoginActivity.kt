@@ -9,10 +9,13 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.*
 import it.insubria.protezionet.common.ForgotPassword
+import it.insubria.protezionet.common.Person
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import java.util.regex.Pattern
-
+//todo il login deve poter essere effettuato solamente se l'utente che cerca di acceder usa creddenziali da amministratore
 /**
  *
  * Entry point dell'app (finestra di login),  associato
@@ -33,6 +36,8 @@ class LoginActivity : AppCompatActivity() {
     val TAG ="MainActivity"
 
     private lateinit var fAuth: FirebaseAuth
+    //istanza utilizzata per ottenere un riferimento al nodo del database da cui leggere
+    private lateinit var reference: DatabaseReference
     private lateinit var progressBar: ProgressBar
 
 
@@ -49,6 +54,9 @@ class LoginActivity : AppCompatActivity() {
         restorePassword.setOnClickListener(this)*/
 
         fAuth = FirebaseAuth.getInstance()
+
+        reference = FirebaseDatabase.getInstance().getReference("person") //rifermento al nodo person da cui leggere
+
         progressBar = progressBarLogin
 
         // title = TITOLO
@@ -98,7 +106,7 @@ class LoginActivity : AppCompatActivity() {
             progressBar.visibility = View.VISIBLE
 
 
-        //autentificazione dell'utente
+        //autentificazione dell'utente, verifichiamo se la mail utilizzata sia presente in firebase authenticator
             fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener{
             //quando viene comppletata l'autentificazione
             //validation complete, aprire una nuova activity e fare il finish() del login
@@ -107,7 +115,13 @@ class LoginActivity : AppCompatActivity() {
                     //prima di fare accedere l'utente verifichiamo se la mail con la quale accede è gia stata verificata, tramite la ricezione di un email e clickando sul link di conferma
                      val user: FirebaseUser? = fAuth.currentUser
 
-                    //controlliamo se l'email è gia stata verificata
+                    //una persona puo accedere all'applicazione solamente se e stato registrato come admin, andiamo ad effettuare quel controllo
+                    if(!verificaAdmin(user)){
+                        println("L'UTENTE CHE ACCEDE NON è UN AMMINISTRATORE")
+                        //todo eseguire quanto serve se l'utente che cerca di accedere non e registrato come admin
+                    }
+
+                    //controlliamo se l'email è gia stata verificata confermandola tramite mail
                     if(user!!.isEmailVerified){
 
                         Toast.makeText(this@LoginActivity, "Logged In Successfully", Toast.LENGTH_SHORT).show()
@@ -129,12 +143,54 @@ class LoginActivity : AppCompatActivity() {
                         Toast.makeText(this@LoginActivity, "Check your email to verify your account", Toast.LENGTH_LONG).show()
                     }
 
-                }else { //todo se si inserisce un email che rispetta il controllo della regex ma non è presente su firebase authentication non succede nulla
-                    // Toast.makeText(this@LoginActivity, "Email or Password is incorrect", Toast.LENGTH_SHORT).show()
+                }else {
+                    // se si entra in questo ramo dell'if vuol dire che si ha provato ad accedere ma si ha inserito una mail
+                    // non presente nel firebase auth oppure mail corretta ma password errata o entrambi
+                    Toast.makeText(this@LoginActivity, "Email or Password is incorrect", Toast.LENGTH_SHORT).show()
                     progressBar.visibility = View.GONE
                 }
             }
         }
+    }
+
+    /**
+     * metodo che verifica che l'utente che cerca di accedere all'applicazione amministratore sia salvato
+     * nel database come un amministratore
+     *
+     * legge la mail con cui si ceerca di accedere e verifica il campo relativo al ruolo di quel volontario,
+     * restituisce true se l'utente è un amministratore, false se è registrato con un altro ruolo
+     *
+     * il parametro contiene il riferimento all'utente attualmente loggato, l'utente corrente
+     */
+    private fun verificaAdmin(user: FirebaseUser?): Boolean {
+        var result: Boolean = false
+        //uid dell'utente che ha effettuato l'accesso
+        val userID = user?.uid!!
+
+        //preleviamo i dati da firebase dell' utente che ha effetuato l'accesso, cercandolo tramite l'UID
+        reference.child(userID).addListenerForSingleValueEvent(object : ValueEventListener {
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var userProfile: Person? = snapshot.getValue(Person::class.java)
+
+                if(userProfile != null){
+                    //lettura del ruolo dell'utente che ha effettuato l'accesso
+                    val ruole: String = userProfile.ruolo
+
+                    //se il ruolo dell'utente che ha effettuato l'accesso è un amministratore resul = true, altrimenti false
+                    if(ruole == getString(R.string.volunteer)){
+                       result =  true
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@LoginActivity, "Something wrong happened!", Toast.LENGTH_LONG).show()
+
+            }
+        })
+
+        return result
     }
 
 

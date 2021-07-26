@@ -17,7 +17,8 @@ import it.insubria.protezionet.common.Person
 import kotlinx.android.synthetic.main.fragment_person.*
 import kotlinx.android.synthetic.main.fragment_person.view.*
 import java.util.regex.Pattern
-
+//todo adesso quando si inserisce una persona si viene mandati alla home page e vengono mostrati i dati di quell'account
+//todo fare si che una volta iscritta una persona si rimanga sul PersonFragment e vengano resettati i campi
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
@@ -77,7 +78,7 @@ class PersonFragment : Fragment(), View.OnClickListener {
         val registerButton: Button = view!!.findViewById(R.id.mRegisterButtonFragmentPerson)//view!!.findViewById(R.id.mRegisterButton)
         registerButton.setOnClickListener(this)
 
-        //inizializzazione
+        //inizializzazione dei vari riferimenti
         fAuth = FirebaseAuth.getInstance()
         progressBar = view.findViewById(R.id.progressBarFragmentPerson)
 
@@ -193,7 +194,7 @@ class PersonFragment : Fragment(), View.OnClickListener {
                     startActivity(intent)
 
                 } else {
-                    Toast.makeText(activity, "Error! Problem during creating user", Toast.LENGTH_SHORT)
+                    Toast.makeText(activity, "Error! A user may already be registered with this email", Toast.LENGTH_SHORT)
                         .show()
                     progressBar.visibility = View.GONE
                 }
@@ -201,6 +202,7 @@ class PersonFragment : Fragment(), View.OnClickListener {
         }
     }
 
+    //todo metodo non utilizzato perchè sostituito con i pattern di android
     private fun isValidEmail(email: String): Boolean {
         val emailPattern = ("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")     /*"[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
         "\\@" +

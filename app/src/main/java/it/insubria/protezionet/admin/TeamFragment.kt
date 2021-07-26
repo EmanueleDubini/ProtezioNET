@@ -32,14 +32,18 @@ class TeamFragment : Fragment(), View.OnClickListener {
     private var param2: String? = null
 
     private lateinit var reference: DatabaseReference
+    //istanza utilizzata per gestire la barra di caricamento
+    private lateinit var progressBar: ProgressBar
 
     lateinit var layoutList: LinearLayout
     lateinit var buttonAdd: Button
     lateinit var buttonSubmitList: Button
 
-    var teamList: ArrayList<String> = ArrayList() //lista dei dei volontari letta da database (Person) che vengono mostrati nelle possibili scelte del dropdownMenu
+    //lista dei dei volontari letta da database (Person) che vengono mostrati nelle possibili scelte del dropdownMenu
+    var teamList: ArrayList<String> = ArrayList()
 
-    var allpersonReadFromDB : ArrayList<Person> = ArrayList() //quando viene fatta la lettura da db di tutti i volontari presenti in person vengono inseriti tutti dentro qui per tenerli in memoria
+    //quando viene fatta la lettura da db di tutti i volontari presenti nel nodo "person" vengono inseriti tutti dentro qui per tenerli in memoria
+    var allpersonReadFromDB : ArrayList<Person> = ArrayList()
 
     var teamMemberList: ArrayList<Person> = ArrayList<Person>() //lista delle persone che poi andranno a formare un team e che saranno lette dalla grafica per essere scritte nel db
 
@@ -64,9 +68,14 @@ class TeamFragment : Fragment(), View.OnClickListener {
         buttonAdd.setOnClickListener(this)
         buttonSubmitList.setOnClickListener(this)
 
-        reference = FirebaseDatabase.getInstance().getReference("person") //rifermento al nodo person da cui leggere
+        //inizializzazione del riferimento dell'oggetto alla progressbar
+        progressBar = view.findViewById(R.id.progressBarFragmentTeam)
 
-        teamList.add(" ") //aggiungo una stringa vuota nell'arrayList usato per popolare le scelte del dropdownMenu, per lasciare uno spazio vuoto all'inizio
+        //rifermento al nodo person da cui leggere i dati dei volontari presenti nel database
+        reference = FirebaseDatabase.getInstance().getReference("person")
+
+        //aggiungo una stringa vuota nell'arrayList usato per popolare le scelte del dropdownMenu, per lasciare uno spazio vuoto all'inizio
+        teamList.add(" ")
 
         //preleviamo i dati da firebase per mostrarli nel dropDownMenu
         reference.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -123,6 +132,9 @@ class TeamFragment : Fragment(), View.OnClickListener {
             R.id.button_add -> addView()
             R.id.mRegisterButtonTeam -> if (checkIfValidAndRead()) {
 
+                //avvio la progress bar
+                progressBar.visibility = View.VISIBLE
+
                 //nome del team letto dalla grafica
                 val nomeTeam: String = TeamName.text.toString().trim()
 
@@ -133,29 +145,26 @@ class TeamFragment : Fragment(), View.OnClickListener {
                 //al massimo farei che se si deve aggiungere una persona gia esistente ad un team si deve fare una finestra a parte oppure bisogna creare il nuovo team da zero
 
                 //istanza di team da scrivere nel database
-                val team: Team = Team(nomeTeam, teamMemberList)
+                val team= Team(nomeTeam, teamMemberList)
 
 
 
-                //todo dovrei leggere tutto quello presente nel campo per specificare il nome del team e inviare al db quello e aggiungendo tutte le persone in teammemberList
+                //leggo tutto quello presente nel campo per specificare il nome del team e inviare al db quello e aggiungendo tutte le persone in teammemberList
 
                 FirebaseDatabase.getInstance().getReference("squadre")
                     .child(nomeTeam).setValue(team).addOnCompleteListener {
                         if (it.isSuccessful) {
-                            Toast.makeText(activity, "User has been registered sucessfully ", Toast.LENGTH_LONG).show()
-                            //todo aggiungere progressBar alla grafica
-                            //progressBar.visibility = View.GONE
+                            Toast.makeText(activity, "Team has been registered sucessfully ", Toast.LENGTH_LONG).show()
+                            progressBar.visibility = View.GONE
                         }
                         else{
                             Toast.makeText(activity, "Failed to register! Try again!", Toast.LENGTH_SHORT).show()
-                            //todo aggiungere progressBar alla grafica
-                            //progressBar.visibility = View.GONE
+                            progressBar.visibility = View.GONE
                         }
                     }
 
-            //si apre la main activity
-                val intent = Intent(activity, MainActivity::class.java)
-            startActivity(intent)
+                //e fatto in modo che vengano resettati i campi e si resti nell fragment dei team
+                resetCampiInserimento()
 
                 //apro l'activity che mostra le persone inserite
                 /*val intent = Intent(activity, ActivityCricketers::class.java)
@@ -166,6 +175,26 @@ class TeamFragment : Fragment(), View.OnClickListener {
             }
         }
 
+
+    }
+
+    private fun resetCampiInserimento() {
+
+        TeamName.text = null
+        layoutList.removeAllViews()
+        /*
+        //ciclo for sul linearLayout che contiene le righe che si aggiungono per inserire un nuovo componente del team
+        for (i in 0 until layoutList.childCount) {
+            val teamMemberView = layoutList.getChildAt(i)
+
+            //nello spinner sono mostrati tutti i volontari presenti nel db, 'nome cognome - ruolo'
+            //dropDown menu che fa scegliere il componenten del team
+            val spinnerTeamMember = teamMemberView.findViewById<View>(R.id.spinner_team) as AppCompatSpinner
+
+            TeamName.text = null
+            //setta in ogni riga lo spazio vuoto, per resettare tutti gli spazi di inserimento
+            spinnerTeamMember.setSelection(0)
+        }*/
 
     }
 

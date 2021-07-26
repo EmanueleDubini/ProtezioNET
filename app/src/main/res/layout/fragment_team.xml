@@ -93,13 +93,13 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="18dp"
         android:text="@string/register_a_new_team"
-        app:layout_constraintBottom_toTopOf="@+id/progressBarFragmentPerson"
+        app:layout_constraintBottom_toTopOf="@+id/progressBarFragmentTeam"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
-        android:id="@+id/progressBarFragmentPerson"
+        android:id="@+id/progressBarFragmentTeam"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
