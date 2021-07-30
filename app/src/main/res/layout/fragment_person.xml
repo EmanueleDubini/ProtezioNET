@@ -159,7 +159,4 @@
             android:text="@string/volunteer" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- TEAM -->
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

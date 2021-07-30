@@ -42,9 +42,9 @@ class HomeFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_home, container, false)
+        val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         //recupero l'id del bottone per registrarsi e gli associo un onClickListener per quando viene premuto
         val signOut: Button = view!!.findViewById(R.id.signOutButton) //view!!.findViewById(R.id.mRegisterButton)
@@ -59,7 +59,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         reference.child(userID).addListenerForSingleValueEvent(object : ValueEventListener {
 
             override fun onDataChange(snapshot: DataSnapshot) {
-                var userProfile: Person? = snapshot.getValue(Person::class.java)
+                val userProfile: Person? = snapshot.getValue(Person::class.java)
 
                 if(userProfile != null){
                     val name: String = userProfile.nome

@@ -1,6 +1,5 @@
 package it.insubria.protezionet.admin
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import androidx.fragment.app.Fragment
 import com.google.firebase.database.*
 import it.insubria.protezionet.common.Person
 import it.insubria.protezionet.common.Team
-import kotlinx.android.synthetic.main.fragment_person.*
 import kotlinx.android.synthetic.main.fragment_team.*
 import java.util.*
 
@@ -286,5 +284,4 @@ class TeamFragment : Fragment(), View.OnClickListener {
     private fun removeView(view: View) {
         layoutList.removeView(view)
     }
-
 }

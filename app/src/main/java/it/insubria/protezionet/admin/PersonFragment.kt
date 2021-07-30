@@ -16,11 +16,9 @@ import it.insubria.protezionet.common.Person
 import kotlinx.android.synthetic.main.fragment_person.*
 import kotlinx.android.synthetic.main.fragment_person.view.*
 
-//todo adesso quando si inserisce una persona si viene mandati alla home page e vengono mostrati i dati di quell'account
-//todo fare si che una volta iscritta una persona si rimanga sul PersonFragment e vengano resettati i campi
+
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
-
 
 
 /**
@@ -140,9 +138,9 @@ class PersonFragment : Fragment(), View.OnClickListener {
             personPassword.requestFocus()
         }
 
-        else if (false) {
-        //todo aggiungere il controllo che venga selezionato un team tra quelli disponibili
-        }
+        /*else if (false) {
+        // aggiungere il controllo che venga selezionato un team tra quelli disponibili, i team sono stati tolti da questa finestra
+        }*/
 
         //se quello che e stato inserito è tutto corretto
         else {
@@ -155,9 +153,15 @@ class PersonFragment : Fragment(), View.OnClickListener {
 
             fAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
 
+                //todo NOTA: quando viene creato un nuovo utente il currentUser diventa il nuovo utente inserito nel db
+                // ogni volta che aggiungo un nuovo account utente, espelle l'utente corrente che ha già effettuato l'accesso.
+                // Ho letto l'API di Firebase e dice che " Se il nuovo account è stato creato, l'utente accede automaticamente "
+                // quindi nel homeFragment.kt non si puo lasciare il nome e la mail dell'itente che attualmente ha effettuato
+                // l'accesso altrimenti ogni volya che si inserisce un nuovo utente vengono mostrati nomi diversi
+                // https://stackoverflow.com/questions/37517208/firebase-kicks-out-current-user/37614090#37614090
+
                 if (task.isSuccessful) {
                     //l'utente e stato inserito correttamente
-                    //Toast.makeText(activity, "User Created", Toast.LENGTH_SHORT).show()
 
                     //leggo quello che e stato selezionato come ruolo dall'interfaccia utente
                     val ruolo = autoCompleteTextViewRole.text.toString()
@@ -205,7 +209,7 @@ class PersonFragment : Fragment(), View.OnClickListener {
         personEmail.text.clear()
         personPassword.text.clear()
         //todo se si desidera resettare il contenuto del dropdownmenu che permette di selzionare il ruolo di una persona
-        //todo bisogna anche inserire il controllo che quando si leggono i vari valori, non sia selezionata la casella vuota
+        // bisogna anche inserire il controllo che quando si leggono i vari valori, non sia selezionata la casella vuota
     }
 
     // metodo non utilizzato perchè sostituito con i pattern di android

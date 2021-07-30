@@ -40,9 +40,9 @@ class TruckFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
-        var view = inflater.inflate(R.layout.fragment_truck, container, false)
+        val view = inflater.inflate(R.layout.fragment_truck, container, false)
 
         val registerButton: Button = view!!.findViewById(R.id.mRegisterButtonFragmentTruck)//view!!.findViewById(R.id.mRegisterButton)
         registerButton.setOnClickListener(this)
