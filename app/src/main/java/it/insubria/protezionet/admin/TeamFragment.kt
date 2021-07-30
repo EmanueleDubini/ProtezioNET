@@ -16,7 +16,6 @@ import kotlinx.android.synthetic.main.fragment_team.*
 import java.util.*
 
 
-// TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -27,7 +26,6 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class TeamFragment : Fragment(), View.OnClickListener {
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
@@ -116,7 +114,6 @@ class TeamFragment : Fragment(), View.OnClickListener {
          * @param param2 Parameter 2.
          * @return A new instance of fragment TeamFragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             TeamFragment().apply {
@@ -181,7 +178,7 @@ class TeamFragment : Fragment(), View.OnClickListener {
 
     private fun resetCampiInserimento() {
 
-        TeamName.text = null
+        TeamName.text.clear()
         layoutList.removeAllViews()
         /*
         //ciclo for sul linearLayout che contiene le righe che si aggiungono per inserire un nuovo componente del team
@@ -274,7 +271,6 @@ class TeamFragment : Fragment(), View.OnClickListener {
 
         val teamMemberView: View = layoutInflater.inflate(R.layout.row_add_team_member, null, false) //il layout dell'intera riga per aggiungere persone
 
-        //todo teoricamente usiamo solo lo spinner//val editText = cricketerView.findViewById<View>(R.id.edit_team_member_name) as EditText
         val spinnerTeam = teamMemberView.findViewById<View>(R.id.spinner_team) as AppCompatSpinner
 
         val imageClose = teamMemberView.findViewById<View>(R.id.image_remove) as ImageView //tasto per rimuovere la riga

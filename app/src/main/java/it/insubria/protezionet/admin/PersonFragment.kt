@@ -1,6 +1,5 @@
 package it.insubria.protezionet.admin
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
 import androidx.fragment.app.Fragment
@@ -16,11 +15,9 @@ import com.google.firebase.database.FirebaseDatabase
 import it.insubria.protezionet.common.Person
 import kotlinx.android.synthetic.main.fragment_person.*
 import kotlinx.android.synthetic.main.fragment_person.view.*
-import java.util.regex.Pattern
+
 //todo adesso quando si inserisce una persona si viene mandati alla home page e vengono mostrati i dati di quell'account
 //todo fare si che una volta iscritta una persona si rimanga sul PersonFragment e vengano resettati i campi
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
@@ -35,7 +32,6 @@ private const val ARG_PARAM2 = "param2"
  * un nuovo volonario oppure registrare un nuovo admin
  */
 class PersonFragment : Fragment(), View.OnClickListener {
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
@@ -44,7 +40,7 @@ class PersonFragment : Fragment(), View.OnClickListener {
     //istanza utilizzata per gestire le autentificazioni su firebase
     private lateinit var fAuth: FirebaseAuth
     //istanza utilizzata per gestire la barra di caricamento
-    private lateinit var progressBar: ProgressBar  //todo forse questi due campi potrebbero essere messi a null e salvati come variabili
+    private lateinit var progressBar: ProgressBar
 
 
 
@@ -65,14 +61,14 @@ class PersonFragment : Fragment(), View.OnClickListener {
         view?.autoCompleteTextViewRole?.setAdapter(arrayAdapterRuoli)
 
         //adapter per il dropdown menu team
-        val teams = resources.getStringArray(R.array.teamList)
+        /*val teams = resources.getStringArray(R.array.teamList)
         val arrayAdapterTeams = ArrayAdapter(requireContext(), R.layout.dropdown_item_team, teams)
-        view?.autoCompleteTextViewTeam?.setAdapter(arrayAdapterTeams)
+        view?.autoCompleteTextViewTeam?.setAdapter(arrayAdapterTeams)*/
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_person, container, false)
+        val view = inflater.inflate(R.layout.fragment_person, container, false)
 
         //recupero l'id del bottone per registrarsi e gli associo un onClickListener per quando viene premuto
         val registerButton: Button = view!!.findViewById(R.id.mRegisterButtonFragmentPerson)//view!!.findViewById(R.id.mRegisterButton)
@@ -94,7 +90,6 @@ class PersonFragment : Fragment(), View.OnClickListener {
          * @param param2 Parameter 2.
          * @return A new instance of fragment PersonFragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             PersonFragment().apply {
@@ -168,10 +163,10 @@ class PersonFragment : Fragment(), View.OnClickListener {
                     val ruolo = autoCompleteTextViewRole.text.toString()
 
                     //leggo il team, quello che e stato selezionato come ruolo dall'interfaccia utente
-                    val team = autoCompleteTextViewTeam.text.toString()
+                    //val team = autoCompleteTextViewTeam.text.toString()
 
                     //genero l'utente da salvare nel database
-                    val user = Person(username, surname, email, password, ruolo, team)
+                    val user = Person(username, surname, email, password, ruolo)
                     //salvo l' id delll'utente corrente che ha effettuato il login nell'app
                     val currentUser : String? = FirebaseAuth.getInstance().currentUser?.uid
 
@@ -189,9 +184,11 @@ class PersonFragment : Fragment(), View.OnClickListener {
                         progressBar.visibility = View.GONE
                     }
 
-                    //si apre la main activity
-                    val intent = Intent(activity, MainActivity::class.java)
-                    startActivity(intent)
+                    //una volta iscritta una nuova persona si rimane sul PersonFragment e vengono resettati i campi della finestra
+                    //pronti per un possibile altro inserimento
+                    /*val intent = Intent(activity, MainActivity::class.java)
+                    startActivity(intent)*/
+                    resetCampiInserimento()
 
                 } else {
                     Toast.makeText(activity, getString(R.string.Error_just_registered), Toast.LENGTH_SHORT)
@@ -202,8 +199,17 @@ class PersonFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    //todo metodo non utilizzato perchè sostituito con i pattern di android
-    private fun isValidEmail(email: String): Boolean {
+    private fun resetCampiInserimento() {
+        personName.text.clear()
+        personSurname.text.clear()
+        personEmail.text.clear()
+        personPassword.text.clear()
+        //todo se si desidera resettare il contenuto del dropdownmenu che permette di selzionare il ruolo di una persona
+        //todo bisogna anche inserire il controllo che quando si leggono i vari valori, non sia selezionata la casella vuota
+    }
+
+    // metodo non utilizzato perchè sostituito con i pattern di android
+    /*private fun isValidEmail(email: String): Boolean {
         val emailPattern = ("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")     /*"[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
         "\\@" +
                 "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
@@ -214,5 +220,5 @@ class PersonFragment : Fragment(), View.OnClickListener {
         val pattern = Pattern.compile(emailPattern)
         val matcher = pattern.matcher(email)
         return matcher.matches()  //se l'indirizzo email soddisfa la reg-ex ritornerà un valore true altrimenti false
-    }
+    }*/
 }

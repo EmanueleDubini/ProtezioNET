@@ -14,7 +14,6 @@ import com.google.firebase.database.*
 import it.insubria.protezionet.common.Person
 import kotlinx.android.synthetic.main.fragment_home.*
 
-// TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -25,14 +24,13 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class HomeFragment : Fragment(), View.OnClickListener {
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
     //istanza utilizzata per rappresentare un utente di firebase
     private lateinit var user: FirebaseUser
     //istanza utilizzata per ottenere un riferimento al nodo del database da cui leggere
-    private lateinit var reference: DatabaseReference  //todo forse questi due campi potrebbero essere messi a null e salvati come variabili
+    private lateinit var reference: DatabaseReference
 
     private lateinit var userID: String
 
@@ -96,7 +94,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
          * @param param2 Parameter 2.
          * @return A new instance of fragment HomeFragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             HomeFragment().apply {

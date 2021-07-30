@@ -12,15 +12,12 @@
         android:id="@+id/mRegisterButtonFragmentPerson"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:layout_marginBottom="18dp"
         android:text="@string/registerUser"
         app:layout_constraintBottom_toTopOf="@+id/progressBarFragmentPerson"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dropDownRole"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -54,6 +51,7 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="18dp"
         android:text="@string/please_enter_details_to_register"
         app:layout_constraintBottom_toTopOf="@+id/personName"
         app:layout_constraintEnd_toEndOf="parent"
@@ -67,7 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="7dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="18dp"
         android:ems="10"
         android:hint="@string/name"
         android:inputType="textPersonName"
@@ -98,7 +96,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="18dp"
         android:ems="10"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
@@ -113,6 +111,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:layout_marginBottom="18dp"
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword"
@@ -121,6 +120,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/personEmail" />
+
+    <!-- RUOLE -->
 
     <ProgressBar
         android:id="@+id/progressBarFragmentPerson"
@@ -132,20 +133,17 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dropDownTeam" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- RUOLE -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/dropDownRole"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginTop="18dp"
         android:hint="@string/role"
-        app:layout_constraintBottom_toTopOf="@+id/dropDownTeam"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/personPassword"
         app:startIconDrawable="@drawable/ic_person_24">
@@ -162,30 +160,6 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- TEAM -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/dropDownTeam"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="32dp"
-        android:hint="@string/team"
-        app:layout_constraintBottom_toTopOf="@+id/mRegisterButtonFragmentPerson"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dropDownRole"
-        app:startIconDrawable="@drawable/ic_person_24">
-
-        <AutoCompleteTextView
-            android:id="@+id/autoCompleteTextViewTeam"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:inputType="none"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
-            android:text="@string/team" />
-    </com.google.android.material.textfield.TextInputLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
