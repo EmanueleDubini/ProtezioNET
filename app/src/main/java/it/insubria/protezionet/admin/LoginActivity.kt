@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import it.insubria.protezionet.common.ForgotPassword
 import it.insubria.protezionet.common.Person
+import it.insubria.protezionet.common.StaticBoolean
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.util.regex.Pattern
@@ -39,6 +40,8 @@ class LoginActivity : AppCompatActivity() {
     //istanza utilizzata per ottenere un riferimento al nodo del database da cui leggere
     private lateinit var reference: DatabaseReference
     private lateinit var progressBar: ProgressBar
+
+
 
 
 
@@ -109,40 +112,44 @@ class LoginActivity : AppCompatActivity() {
         //autentificazione dell'utente, verifichiamo se la mail utilizzata sia presente in firebase authenticator
             fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener{
             //quando viene comppletata l'autentificazione
-            //validation complete, aprire una nuova activity e fare il finish() del login
+            //validation complete, aprire una nuova activity e fare il finish() del login se chi accede e un admin
 
-                if(it.isSuccessful){
-                    //prima di fare accedere l'utente verifichiamo se la mail con la quale accede è gia stata verificata, tramite la ricezione di un email e clickando sul link di conferma
-                     val user: FirebaseUser? = fAuth.currentUser
+                if(it.isSuccessful) {
+                    val user: FirebaseUser? = fAuth.currentUser
 
                     //una persona puo accedere all'applicazione solamente se e stato registrato come admin, andiamo ad effettuare quel controllo
-                    if(!verificaAdmin(user)){
-                        println("L'UTENTE CHE ACCEDE NON è UN AMMINISTRATORE")
-                        //todo eseguire quanto serve se l'utente che cerca di accedere non e registrato come admin
-                    }
+                    println("DEBUG: verifica(user) restituiscce: ${verificaAdmin(user)}")
+                    if (verificaAdmin(user)) {
+                        //se l'utente che accede e un admin
 
-                    //controlliamo se l'email è gia stata verificata confermandola tramite mail
-                    if(user!!.isEmailVerified){
+                        //per l'utente admin verifichiamo se la mail con la quale accede è gia stata verificata, tramite la ricezione di un email e clickando sul link di conferma
+                        //controlliamo se l'email è gia stata verificata confermandola tramite mail, se non e verificata inviamo la mail di verifica
+                        if (user!!.isEmailVerified) {
 
-                        Toast.makeText(this@LoginActivity, "Logged In Successfully", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@LoginActivity, "Logged In Successfully", Toast.LENGTH_SHORT).show()
 
                         //redirect to user profile
                         //Creiamo un Intent passandogli il Context ( this@LoginActivity ) e in più passiamo l'informazione per rendere l'intent esplicito, l'activity che deve essere eseguita, dicendo che deve aprire l'activity la cui classe è MainAcivity
-                        val intent = Intent(this@LoginActivity, MainActivity :: class.java)
+                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
                         startActivity(intent)
                         //creato l'intent con le informazioni da passare alla SecondActivity, inviamo un richiesta ad ART tramite lo startActivity() passandogli l'intent di tipo esplicito.
                         //l'androidRuntime, sa che oggetto deve lanciare "MainActivity :: class.java" e quindi istanzia un opggetto di tipo MainActivity e chiama su di esso il metodo onCreate() che crea l'interfaccia e inserisce al suo interno il contenuto che abbiamo
                         // inserito nel file activity_main.xml
 
                         progressBar.visibility = View.GONE
-                    }
-                    //se la mail non e stata ancora verificata
-                    else{
-                        user.sendEmailVerification()
+                        }
+                        else {
+                            //se la mail non e stata ancora verificata, inviamo la mail di verifica
+                            user.sendEmailVerification()
+                            progressBar.visibility = View.GONE
+                            Toast.makeText(this@LoginActivity, "Check your email to verify your account", Toast.LENGTH_LONG).show()
+                        }
+                    }else{
+                        //se l'utente che accede non e un admin lo avvisiamo
                         progressBar.visibility = View.GONE
-                        Toast.makeText(this@LoginActivity, "Check your email to verify your account", Toast.LENGTH_LONG).show()
-                    }
+                        Toast.makeText(this@LoginActivity, "You are logging in without Admin permission", Toast.LENGTH_LONG).show()
 
+                    }
                 }else {
                     // se si entra in questo ramo dell'if vuol dire che si ha provato ad accedere ma si ha inserito una mail
                     // non presente nel firebase auth oppure mail corretta ma password errata o entrambi
@@ -163,7 +170,8 @@ class LoginActivity : AppCompatActivity() {
      * il parametro contiene il riferimento all'utente attualmente loggato, l'utente corrente
      */
     private fun verificaAdmin(user: FirebaseUser?): Boolean {
-        var result: Boolean = false
+        StaticBoolean.restoreInitialState()
+        //var result = false
         //uid dell'utente che ha effettuato l'accesso
         val userID = user?.uid!!
 
@@ -171,15 +179,22 @@ class LoginActivity : AppCompatActivity() {
         reference.child(userID).addListenerForSingleValueEvent(object : ValueEventListener {
 
             override fun onDataChange(snapshot: DataSnapshot) {
-                var userProfile: Person? = snapshot.getValue(Person::class.java)
+                val userProfile: Person? = snapshot.getValue(Person::class.java)
 
+                //print(userID)
+                //println(userProfile)
                 if(userProfile != null){
                     //lettura del ruolo dell'utente che ha effettuato l'accesso
                     val ruole: String = userProfile.ruolo
+                    //println("Ruolo letto dall'applicazione: $ruole")
+                    //println("ruolo usato a cui si fa riferimento: ${getString(R.string.admin)}")
 
                     //se il ruolo dell'utente che ha effettuato l'accesso è un amministratore resul = true, altrimenti false
-                    if(ruole == getString(R.string.volunteer)){
-                       result =  true
+                    //if(ruole == getString(R.string.admin)){
+                        //StaticBoolean.setTrue()
+                        //println("prima del return result vale: $result")
+                    if(ruole == "Admin" || ruole == "Amministratore"){
+                        StaticBoolean.setTrue()
                     }
                 }
             }
@@ -190,7 +205,8 @@ class LoginActivity : AppCompatActivity() {
             }
         })
 
-        return result
+        println("StaticBoolean.currentState= $StaticBoolean.currentState()")
+        return StaticBoolean.currentState()
     }
 
 
