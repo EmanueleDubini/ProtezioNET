@@ -10,13 +10,10 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
-import com.google.firebase.ktx.Firebase
 import it.insubria.protezionet.common.ForgotPassword
-import it.insubria.protezionet.common.Person
-import it.insubria.protezionet.common.StaticBoolean
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.fragment_home.*
-import java.util.regex.Pattern
+
 /**
  *
  * Entry point dell'app (finestra di login),  associato
