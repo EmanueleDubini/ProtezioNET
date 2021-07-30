@@ -39,8 +39,8 @@ class EquipmentFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var view = inflater.inflate(R.layout.fragment_equipment, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        val view = inflater.inflate(R.layout.fragment_equipment, container, false)
 
         val registerButton: Button = view!!.findViewById(R.id.mRegisterButtonFragmentEquipment)//view!!.findViewById(R.id.mRegisterButton)
         registerButton.setOnClickListener(this)

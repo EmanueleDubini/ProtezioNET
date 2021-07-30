@@ -140,6 +140,9 @@ class TeamFragment : Fragment(), View.OnClickListener {
                 //al massimo farei che se si deve aggiungere una persona gia esistente ad un team si deve fare una finestra a parte oppure bisogna creare il nuovo team da zero
                 //--> si elimina il team e se ricrea uno nuovo
 
+                //todo fare le activity per eliminbare gli oggetti dal database, una per ogni finestra
+                // seguire come gia fatto per il il login, con la scritta blu clickabile
+
                 //istanza di team da scrivere nel database
                 val team= Team(nomeTeam, teamMemberList)
 
