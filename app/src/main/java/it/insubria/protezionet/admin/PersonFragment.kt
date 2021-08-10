@@ -1,17 +1,16 @@
 package it.insubria.protezionet.admin
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ProgressBar
-import android.widget.Toast
+import android.widget.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import it.insubria.protezionet.common.ForgotPassword
 import it.insubria.protezionet.common.Person
 import kotlinx.android.synthetic.main.fragment_person.*
 import kotlinx.android.synthetic.main.fragment_person.view.*
@@ -72,6 +71,10 @@ class PersonFragment : Fragment(), View.OnClickListener {
         val registerButton: Button = view!!.findViewById(R.id.mRegisterButtonFragmentPerson)//view!!.findViewById(R.id.mRegisterButton)
         registerButton.setOnClickListener(this)
 
+        val deletePersonTextView: TextView = view.findViewById(R.id.deletePersonTextView)
+        deletePersonTextView.setOnClickListener(this)
+
+
         //inizializzazione dei vari riferimenti
         fAuth = FirebaseAuth.getInstance()
         progressBar = view.findViewById(R.id.progressBarFragmentPerson)
@@ -100,8 +103,17 @@ class PersonFragment : Fragment(), View.OnClickListener {
 
 
     override fun onClick(v: View?) {
-        //viene eseguito quando il bottone mRegisterButton viene premuto
+        when (v!!.id) {
 
+            //viene eseguito quando il bottone mRegisterButton viene premuto
+            R.id.mRegisterButtonFragmentPerson -> registraPersona()
+
+            //viene eseguito quando la textView "deletePersonTextView" viene premuta
+            R.id.deletePersonTextView -> deletePersonPanel()
+        }
+    }
+
+    private fun registraPersona() {
         val username: String = personName.text.toString().trim()
         val surname: String = personSurname.text.toString().trim()
         val email: String = personEmail.text.toString().trim()
@@ -156,7 +168,7 @@ class PersonFragment : Fragment(), View.OnClickListener {
                 //todo NOTA: quando viene creato un nuovo utente il currentUser diventa il nuovo utente inserito nel db
                 // ogni volta che aggiungo un nuovo account utente, espelle l'utente corrente che ha già effettuato l'accesso.
                 // Ho letto l'API di Firebase e dice che " Se il nuovo account è stato creato, l'utente accede automaticamente "
-                // quindi nel homeFragment.kt non si puo lasciare il nome e la mail dell'itente che attualmente ha effettuato
+                // quindi nel homeFragment.kt non si puo lasciare il nome e la mail dell'utente che attualmente ha effettuato
                 // l'accesso altrimenti ogni volya che si inserisce un nuovo utente vengono mostrati nomi diversi
                 // https://stackoverflow.com/questions/37517208/firebase-kicks-out-current-user/37614090#37614090
 
@@ -169,24 +181,26 @@ class PersonFragment : Fragment(), View.OnClickListener {
                     //leggo il team, quello che e stato selezionato come ruolo dall'interfaccia utente
                     //val team = autoCompleteTextViewTeam.text.toString()
 
-                    //genero l'utente da salvare nel database
-                    val user = Person(username, surname, email, password, ruolo)
+
                     //salvo l' id delll'utente corrente che ha effettuato il login nell'app
-                    val currentUser : String? = FirebaseAuth.getInstance().currentUser?.uid
+                    val currentUser : String = FirebaseAuth.getInstance().currentUser!!.uid
+
+                    //genero l'utente da salvare nel database
+                    //todo quando si scrivono i dati sul database andrebbero messi tutti in minuscolo
+                    val user = Person(currentUser,username, surname, email, password, ruolo)
 
                     //salvo l'utente sul database nel nodo "person"
-                    if (currentUser != null) {
-                        FirebaseDatabase.getInstance().getReference("person")
-                            .child(currentUser).setValue(user).addOnCompleteListener {
-                                if (it.isSuccessful) {
-                                    Toast.makeText(activity, "User has been registered sucessfully ", Toast.LENGTH_LONG).show()
-                                    progressBar.visibility = View.GONE
-                                }
+                    FirebaseDatabase.getInstance().getReference("person")
+                        .child(currentUser).setValue(user).addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                Toast.makeText(activity, "User has been registered sucessfully ", Toast.LENGTH_LONG).show()
+                                progressBar.visibility = View.GONE
                             }
-                    }else{
-                        Toast.makeText(activity, "Failed to register! Try again!", Toast.LENGTH_SHORT).show()
-                        progressBar.visibility = View.GONE
-                    }
+                            else{
+                                Toast.makeText(activity, "Failed to register! Try again!", Toast.LENGTH_SHORT).show()
+                                progressBar.visibility = View.GONE
+                            }
+                        }
 
                     //una volta iscritta una nuova persona si rimane sul PersonFragment e vengono resettati i campi della finestra
                     //pronti per un possibile altro inserimento
@@ -201,6 +215,12 @@ class PersonFragment : Fragment(), View.OnClickListener {
                 }
             }
         }
+    }
+
+    private fun deletePersonPanel() {
+        val intent = Intent(activity, DeletePersonActivity::class.java)
+        startActivity(intent)
+
     }
 
     private fun resetCampiInserimento() {

@@ -244,7 +244,8 @@ class TeamFragment : Fragment(), View.OnClickListener {
                 val cognome = valoriLettura[1] //la posizione due viene saltata perche contiene '-' ---> nome cognome - ruolo
                 val ruolo = valoriLettura[3]
 
-                for (persona in allpersonReadFromDB) {//persona contiene tutti gli oggetti Person presenti sul db
+                for (persona in allpersonReadFromDB) {
+                    //persona contiene tutti gli oggetti Person presenti sul db
                 //scorro tutti gli elementi di allpersonReadFromDatabase, quindi al primo ciclo la variabile persona contiene il primo elemento Person contenuto nell'arraylist allpersonreadFromDB e cosi via
 
                     if (persona.nome == nome && persona.cognome == cognome && persona.ruolo == ruolo){

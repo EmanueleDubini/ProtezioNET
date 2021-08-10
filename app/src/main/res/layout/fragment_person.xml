@@ -12,12 +12,14 @@
         android:id="@+id/mRegisterButtonFragmentPerson"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="18dp"
+        android:layout_marginTop="88dp"
+        android:layout_marginBottom="22dp"
         android:text="@string/registerUser"
-        app:layout_constraintBottom_toTopOf="@+id/progressBarFragmentPerson"
+        app:layout_constraintBottom_toTopOf="@+id/deletePersonTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dropDownRole" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -66,9 +68,11 @@
         android:layout_marginTop="12dp"
         android:layout_marginEnd="7dp"
         android:layout_marginBottom="18dp"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/name"
         android:inputType="textPersonName"
+        android:minHeight="48dp"
         app:layout_constraintBottom_toTopOf="@+id/personEmail"
         app:layout_constraintEnd_toStartOf="@+id/personSurname"
         app:layout_constraintHorizontal_bias="0.0"
@@ -85,6 +89,7 @@
         android:ems="10"
         android:hint="@string/surname"
         android:inputType="textPersonName"
+        android:minHeight="48dp"
         app:layout_constraintBottom_toTopOf="@+id/personEmail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/personName"
@@ -100,6 +105,7 @@
         android:ems="10"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
+        android:minHeight="48dp"
         app:layout_constraintBottom_toTopOf="@+id/personPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -115,6 +121,7 @@
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword"
+        android:minHeight="48dp"
         app:layout_constraintBottom_toTopOf="@+id/dropDownRole"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -128,13 +135,14 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="64dp"
         android:progressTint="#FF0000"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/deletePersonTextView" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/dropDownRole"
@@ -156,7 +164,22 @@
             android:inputType="none"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
-            android:text="@string/volunteer" />
+            android:text="@string/volunteer"
+            android:textColor="#757575" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/deletePersonTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:onClick="deletePersonPanel"
+        android:text="@string/person_management_panel"
+        android:textColor="#2962FF"
+        app:layout_constraintBottom_toTopOf="@+id/progressBarFragmentPerson"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mRegisterButtonFragmentPerson" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

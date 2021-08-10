@@ -11,7 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ProtezioNET">
-        <activity android:name="it.insubria.protezionet.common.ForgotPassword"></activity>
+        <activity
+            android:name=".DeletePersonActivity"
+            android:exported="true" />
+        <activity android:name="it.insubria.protezionet.common.ForgotPassword" />
         <activity
             android:name=".SplashActivity"
             android:theme="@style/Theme.ProtezioNET"> <!-- aggiunta dell'activity SplashActivity per lo splash screen nell'android manifest -->

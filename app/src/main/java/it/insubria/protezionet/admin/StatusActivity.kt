@@ -9,6 +9,8 @@ import com.google.firebase.database.DataSnapshot
  *  Prima Activity visualizzata dopo il Login
  *
  **/
+
+//todo activity non utilizzata
 class StatusActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -31,7 +31,7 @@ class LoginActivity : AppCompatActivity() {
     //private lateinit var binding: ActivityMainBinding
 
     var returnValue = 0.0
-    val TAG = "MainActivity"
+    //val TAG = "MainActivity"
 
     private lateinit var fAuth: FirebaseAuth
 
@@ -69,14 +69,14 @@ class LoginActivity : AppCompatActivity() {
             .trim()  //binding.PasswordField.text.toString()                             //editTextPassword.getText().toString()
 
 
-        if (email.isEmpty()) { //todo generare le stringhe
-            mEmailLogin.error = "Email is Required"
+        if (email.isEmpty()) {
+            mEmailLogin.error = getString(R.string.email_is_required)
             mEmailLogin.requestFocus()
         } else if (password.isEmpty()) {
-            mPasswordLogin.error = "Password is Required"
+            mPasswordLogin.error = getString(R.string.passord_is_required)
             mPasswordLogin.requestFocus()
         } else if (password.length < 6) {
-            mPasswordLogin.error = "Password Must be greater than 6 Characters"
+            mPasswordLogin.error = getString(R.string.password_grater_than_6_characters)
             mPasswordLogin.requestFocus()
         }
 
