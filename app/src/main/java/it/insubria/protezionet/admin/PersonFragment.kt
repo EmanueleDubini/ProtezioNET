@@ -141,7 +141,7 @@ class PersonFragment : Fragment(), View.OnClickListener {
         }
 
         else if (password.isEmpty()) {
-            personPassword.error = getString(R.string.pasword_is_required)
+            personPassword.error = getString(R.string.password_is_required)
             personPassword.requestFocus()
         }
 

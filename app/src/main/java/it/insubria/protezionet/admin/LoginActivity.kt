@@ -73,10 +73,10 @@ class LoginActivity : AppCompatActivity() {
             mEmailLogin.error = getString(R.string.email_is_required)
             mEmailLogin.requestFocus()
         } else if (password.isEmpty()) {
-            mPasswordLogin.error = getString(R.string.passord_is_required)
+            mPasswordLogin.error = getString(R.string.password_is_required)
             mPasswordLogin.requestFocus()
         } else if (password.length < 6) {
-            mPasswordLogin.error = getString(R.string.password_grater_than_6_characters)
+            mPasswordLogin.error = getString(R.string.password_greater_than_6_characters)
             mPasswordLogin.requestFocus()
         }
 

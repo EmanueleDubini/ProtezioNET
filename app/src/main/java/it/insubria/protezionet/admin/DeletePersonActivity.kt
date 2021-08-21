@@ -1,11 +1,11 @@
 package it.insubria.protezionet.admin
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Patterns
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import it.insubria.protezionet.common.Person
 import kotlinx.android.synthetic.main.activity_delete_person.*
@@ -55,6 +55,7 @@ class DeletePersonActivity : AppCompatActivity() {
     }
 
     //quando viene premuto il botone di resetPassword
+    @ExperimentalStdlibApi
     fun deletePerson(v: View){
         if(v.id == R.id.deletePersonButton){
             //procedo con l'eliminazione della persona specificata dall'utente
@@ -64,13 +65,25 @@ class DeletePersonActivity : AppCompatActivity() {
                 personNameDelete.error = getString(R.string.person_name_required)
                 personNameDelete.requestFocus()
             }
-            //verifico se il nome della persona da eliminare e presente nel database
-            else if (!ricercaPersona(personName)) {
-                personNameDelete.error = getString(R.string.specified_person_does_not_eist)      //binding.UsernameField.error = "Invalid Email"                    //editTextUsername.setError("Invalid email")
+            //verifico se il nome della persona da eliminare e presente nel database, se è presente mi salvo i suoi dati
+            // per poterla eliminare
+            var personaDaEliminare: Person? = ricercaPersona(personName)
+            // se personaDaEliminare è null vuol dire che non e stato trovato chi va eliminato
+            if (personaDaEliminare == null) {
+                personNameDelete.error = getString(R.string.specified_person_does_not_exist)      //binding.UsernameField.error = "Invalid Email"                    //editTextUsername.setError("Invalid email")
                 personNameDelete.requestFocus()
             }else{
                 Toast.makeText(this@DeletePersonActivity, "la persona esiste, ora va eliminata", Toast.LENGTH_LONG).show()
-                //todo implementare la parte in cui si elimina il volontario dal database
+
+                reference.child(personaDaEliminare.id).removeValue()
+                //firebase authenticator non permette al current user di eliminare altri utenti per ragioni di sicurezza
+                //si potrebbe fare solamente utilizzando il databse in modo da avere account amministratori o account normali.
+                // quindi per eliminare una persona dalla sezione firebase authenticator bisogna accedere con il profilo di quella persona e eliminare il proprio account
+                FirebaseAuth.getInstance().signInWithEmailAndPassword(personaDaEliminare.email, personaDaEliminare.password)
+
+                FirebaseAuth.getInstance().currentUser?.delete()
+            //todo implementare la parte in cui si elimina il volontario dal database sezione autentication
+                //todo forse quando elimina una persona elimina tutti i sottonodi della sezione person  dentro realtime database
             }
 
 
@@ -110,15 +123,16 @@ class DeletePersonActivity : AppCompatActivity() {
         }*/
     }
 
-    private fun ricercaPersona(personNameDelete: String): Boolean {
+    @ExperimentalStdlibApi
+    private fun ricercaPersona(personNameDelete: String): Person? {
         for(persona in allpersonReadFromDB){
             //persona contiene tutti gli oggetti Person presenti sul db
             //scorro tutti gli elementi di allpersonReadFromDatabase, quindi al primo ciclo la variabile persona contiene il primo elemento Person contenuto nell'arraylist allpersonreadFromDB e cosi via
 
             if(persona.nome.lowercase(Locale.getDefault()) == personNameDelete.lowercase(Locale.getDefault())){
-                return true
+                return persona
             }
         }
-        return false
+        return null
     }
 }
