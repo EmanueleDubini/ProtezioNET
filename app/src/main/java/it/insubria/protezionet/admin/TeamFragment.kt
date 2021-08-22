@@ -23,6 +23,12 @@ private const val ARG_PARAM2 = "param2"
  * Use the [TeamFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+
+/*le persone possono partecipare a piu team, quindi quando viene creato un team se nei suoi membri è presente una persona che partecipa già ad un altro team,
+ semplicemente essa parteciperà ad entrambi i team
+
+ se si desidera aggiungere un unica persona ad un team già esistente, si dovrà eliminare il vecchio team e creare un nuovo team, con tutti i membri di prima
+ e la nuova persona da inserire*/
 class TeamFragment : Fragment(), View.OnClickListener {
     private var param1: String? = null
     private var param2: String? = null
@@ -133,19 +139,8 @@ class TeamFragment : Fragment(), View.OnClickListener {
                 //nome del team letto dalla grafica
                 val nomeTeam: String = TeamName.text.toString().trim()
 
-                //todo prima di creare l'istanza da scrivere bisogna modificare i valori nel campo Team, delle varie persone che compongono il team specificando che appartengono al team che si sta scrivendo
-                //se sono gia in un team o si permette di partecipare a piu team altrimenti si aggiunge al nuovo team e si elimina da quello vecchio --> le persone possono partecipare a piu team
-
-                //todo decidere come portare avanti tutto perchè anche nella finestra person bisogna specificare il team di cui fa parte una persona, io toglierei il campo team dalla finestra person
-                //al massimo farei che se si deve aggiungere una persona gia esistente ad un team si deve fare una finestra a parte oppure bisogna creare il nuovo team da zero
-                //--> si elimina il team e se ricrea uno nuovo
-
-                //todo fare le activity per eliminbare gli oggetti dal database, una per ogni finestra
-                // seguire come gia fatto per il il login, con la scritta blu clickabile
-
                 //istanza di team da scrivere nel database
                 val team= Team(nomeTeam, teamMemberList)
-
 
 
                 //leggo tutto quello presente nel campo per specificare il nome del team e inviare al db quello e aggiungendo tutte le persone in teammemberList

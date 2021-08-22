@@ -7,12 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.text.set
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import it.insubria.protezionet.common.Person
 import kotlinx.android.synthetic.main.fragment_person.*
 import kotlinx.android.synthetic.main.fragment_person.view.*
+import java.util.*
 
 
 private const val ARG_PARAM1 = "param1"
@@ -113,10 +115,12 @@ class PersonFragment : Fragment(), View.OnClickListener {
     }
 
     private fun registraPersona() {
-        val username: String = personName.text.toString().trim()
-        val surname: String = personSurname.text.toString().trim()
-        val email: String = personEmail.text.toString().trim()
-        val password: String = personPassword.text.toString().trim()
+        val username: String = personName.text.toString().trim().lowercase(Locale.getDefault())
+        val surname: String = personSurname.text.toString().trim().lowercase(Locale.getDefault())
+        val email: String = personEmail.text.toString().trim().lowercase(Locale.getDefault())
+        val password: String = personPassword.text.toString().trim().lowercase(Locale.getDefault())
+
+        //rendo tutte le informazioni lette dalla finestra minuscole
 
         if (username.isEmpty()) {
             personName.error = getString(R.string.name_is_required)
@@ -185,7 +189,7 @@ class PersonFragment : Fragment(), View.OnClickListener {
                     val currentUser : String = FirebaseAuth.getInstance().currentUser!!.uid
 
                     //genero l'utente da salvare nel database
-                    //todo quando si scrivono i dati sul database andrebbero messi tutti in minuscolo
+                    // le informazioni lette dalla finestra sono tutte rese minuscole
                     val user = Person(currentUser,username, surname, email, password, ruolo)
 
                     //salvo l'utente sul database nel nodo "person"
@@ -227,8 +231,7 @@ class PersonFragment : Fragment(), View.OnClickListener {
         personSurname.text.clear()
         personEmail.text.clear()
         personPassword.text.clear()
-        //todo se si desidera resettare il contenuto del dropdownmenu che permette di selzionare il ruolo di una persona
-        // bisogna anche inserire il controllo che quando si leggono i vari valori, non sia selezionata la casella vuota
+        // per il combobox xhe permette di selezionare il ruolo si è preferito non resettarlo
     }
 
     // metodo non utilizzato perchè sostituito con i pattern di android
