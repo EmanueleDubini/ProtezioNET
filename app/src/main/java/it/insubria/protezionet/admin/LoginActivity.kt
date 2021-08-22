@@ -30,7 +30,6 @@ class LoginActivity : AppCompatActivity() {
 
     //private lateinit var binding: ActivityMainBinding
 
-    var returnValue = 0.0
     //val TAG = "MainActivity"
 
     private lateinit var fAuth: FirebaseAuth
@@ -62,80 +61,91 @@ class LoginActivity : AppCompatActivity() {
 
 
     fun checkLogin(v: View) {
+        if (v.id == R.id.mLoginButton) {
 
-        val email: String = mEmailLogin.text.toString()
-            .trim()  //binding.UsernameField.text.toString()    //editTextUsername.getText().toString()
-        val password: String = mPasswordLogin.text.toString()
-            .trim()  //binding.PasswordField.text.toString()                             //editTextPassword.getText().toString()
+            val email: String = mEmailLogin.text.toString()
+                .trim()  //binding.UsernameField.text.toString()    //editTextUsername.getText().toString()
+            val password: String = mPasswordLogin.text.toString()
+                .trim()  //binding.PasswordField.text.toString()                             //editTextPassword.getText().toString()
 
 
-        if (email.isEmpty()) {
-            mEmailLogin.error = getString(R.string.email_is_required)
-            mEmailLogin.requestFocus()
-        } else if (password.isEmpty()) {
-            mPasswordLogin.error = getString(R.string.password_is_required)
-            mPasswordLogin.requestFocus()
-        } else if (password.length < 6) {
-            mPasswordLogin.error = getString(R.string.password_greater_than_6_characters)
-            mPasswordLogin.requestFocus()
-        }
+            if (email.isEmpty()) {
+                mEmailLogin.error = getString(R.string.email_is_required)
+                mEmailLogin.requestFocus()
+            } else if (password.isEmpty()) {
+                mPasswordLogin.error = getString(R.string.password_is_required)
+                mPasswordLogin.requestFocus()
+            } else if (password.length < 6) {
+                mPasswordLogin.error = getString(R.string.password_greater_than_6_characters)
+                mPasswordLogin.requestFocus()
+            } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                mEmailLogin.error =
+                    getString(R.string.invalid_email)       //binding.UsernameField.error = "Invalid Email"                    //editTextUsername.setError("Invalid email")
+                mEmailLogin.requestFocus()
+            }
 
-        else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            mEmailLogin.error =
-                getString(R.string.invalid_email)       //binding.UsernameField.error = "Invalid Email"                    //editTextUsername.setError("Invalid email")
-            mEmailLogin.requestFocus()
-        }
+            //se quello che e stato inserito è tutto corretto
+            else {
+                //avvio la progress bar
+                progressBar.visibility = View.VISIBLE
 
-        //se quello che e stato inserito è tutto corretto
-        else {
-            //avvio la progress bar
-            progressBar.visibility = View.VISIBLE
+                //autentificazione dell'utente, verifichiamo se la mail utilizzata sia presente in firebase authenticator
+                fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
+                    //quando viene comppletata l'autentificazione
+                    //validation complete, aprire una nuova activity e fare il finish() del login se chi accede e un admin
 
-            //autentificazione dell'utente, verifichiamo se la mail utilizzata sia presente in firebase authenticator
-            fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
-                //quando viene comppletata l'autentificazione
-                //validation complete, aprire una nuova activity e fare il finish() del login se chi accede e un admin
+                    if (it.isSuccessful) {
+                        val user: FirebaseUser? = fAuth.currentUser
 
-                if (it.isSuccessful) {
-                    val user: FirebaseUser? = fAuth.currentUser
+                        //per l'utente admin verifichiamo se la mail con la quale accede è gia stata verificata, tramite la ricezione di un email e clickando sul link di conferma
+                        //controlliamo se l'email è gia stata verificata confermandola tramite mail, se non e verificata inviamo la mail di verifica
+                        if (user!!.isEmailVerified) {
 
-                    //per l'utente admin verifichiamo se la mail con la quale accede è gia stata verificata, tramite la ricezione di un email e clickando sul link di conferma
-                    //controlliamo se l'email è gia stata verificata confermandola tramite mail, se non e verificata inviamo la mail di verifica
-                    if (user!!.isEmailVerified) {
+                            Toast.makeText(
+                                this@LoginActivity,
+                                "Logged In Successfully",
+                                Toast.LENGTH_SHORT
+                            ).show()
 
-                        Toast.makeText(this@LoginActivity, "Logged In Successfully", Toast.LENGTH_SHORT).show()
+                            //redirect to user profile
+                            //Creiamo un Intent passandogli il Context ( this@LoginActivity ) e in più passiamo l'informazione per rendere l'intent esplicito, l'activity che deve essere eseguita, dicendo che deve aprire l'activity la cui classe è MainAcivity
+                            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                            startActivity(intent)
+                            //creato l'intent con le informazioni da passare alla SecondActivity, inviamo un richiesta ad ART tramite lo startActivity() passandogli l'intent di tipo esplicito.
+                            //l'androidRuntime, sa che oggetto deve lanciare "MainActivity :: class.java" e quindi istanzia un opggetto di tipo MainActivity e chiama su di esso il metodo onCreate() che crea l'interfaccia e inserisce al suo interno il contenuto che abbiamo
+                            // inserito nel file activity_main.xml
 
-                        //redirect to user profile
-                        //Creiamo un Intent passandogli il Context ( this@LoginActivity ) e in più passiamo l'informazione per rendere l'intent esplicito, l'activity che deve essere eseguita, dicendo che deve aprire l'activity la cui classe è MainAcivity
-                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                        startActivity(intent)
-                        //creato l'intent con le informazioni da passare alla SecondActivity, inviamo un richiesta ad ART tramite lo startActivity() passandogli l'intent di tipo esplicito.
-                        //l'androidRuntime, sa che oggetto deve lanciare "MainActivity :: class.java" e quindi istanzia un opggetto di tipo MainActivity e chiama su di esso il metodo onCreate() che crea l'interfaccia e inserisce al suo interno il contenuto che abbiamo
-                        // inserito nel file activity_main.xml
+                            progressBar.visibility = View.GONE
+                        } else {
+                            //se la mail non e stata ancora verificata, inviamo la mail di verifica
+                            user.sendEmailVerification()
+                            progressBar.visibility = View.GONE
 
+                            Toast.makeText(
+                                this@LoginActivity,
+                                "Check your email to verify your account",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    } else {
+                        // se si entra in questo ramo dell'if vuol dire che si ha provato ad accedere ma si ha inserito una mail // non presente nel firebase auth oppure mail corretta ma password errata o entrambi
+                        Toast.makeText(
+                            this@LoginActivity,
+                            "Email or Password is incorrect",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         progressBar.visibility = View.GONE
                     }
-                    else {
-                        //se la mail non e stata ancora verificata, inviamo la mail di verifica
-                        user.sendEmailVerification()
-                        progressBar.visibility = View.GONE
-
-                        Toast.makeText(this@LoginActivity, "Check your email to verify your account", Toast.LENGTH_LONG).show()
-                    }
-                }
-                else {
-                    // se si entra in questo ramo dell'if vuol dire che si ha provato ad accedere ma si ha inserito una mail // non presente nel firebase auth oppure mail corretta ma password errata o entrambi
-                    Toast.makeText(this@LoginActivity, "Email or Password is incorrect", Toast.LENGTH_SHORT).show()
-                    progressBar.visibility = View.GONE
                 }
             }
         }
     }
 
     fun restorePassword(v: View) {
-        val intent = Intent(this@LoginActivity, ForgotPassword::class.java)
-        startActivity(intent)
-
+        if (v.id == R.id.forgotPassword) {
+            val intent = Intent(this@LoginActivity, ForgotPassword::class.java)
+            startActivity(intent)
+        }
     }
 
        /* /**

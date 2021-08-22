@@ -3,14 +3,13 @@ package it.insubria.protezionet.admin
 import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import it.insubria.protezionet.common.ForgotPassword
 import it.insubria.protezionet.common.Person
 import kotlinx.android.synthetic.main.fragment_person.*
 import kotlinx.android.synthetic.main.fragment_person.view.*

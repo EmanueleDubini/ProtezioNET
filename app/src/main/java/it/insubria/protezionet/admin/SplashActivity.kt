@@ -1,10 +1,9 @@
 package it.insubria.protezionet.admin
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import it.insubria.protezionet.admin.R
+import androidx.appcompat.app.AppCompatActivity
 
 /**
  * Activity utilizzata per visualizzare lo splash screen prima di entrare nell'activity di login
