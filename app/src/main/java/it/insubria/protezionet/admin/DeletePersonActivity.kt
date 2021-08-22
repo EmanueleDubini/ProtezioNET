@@ -1,5 +1,6 @@
 package it.insubria.protezionet.admin
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -81,9 +82,24 @@ class DeletePersonActivity : AppCompatActivity() {
                 // quindi per eliminare una persona dalla sezione firebase authenticator bisogna accedere con il profilo di quella persona e eliminare il proprio account
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(personaDaEliminare.email, personaDaEliminare.password)
 
-                FirebaseAuth.getInstance().currentUser?.delete()
-            //todo implementare la parte in cui si elimina il volontario dal database sezione autentication
-                //todo forse quando elimina una persona elimina tutti i sottonodi della sezione person  dentro realtime database
+                FirebaseAuth.getInstance().currentUser?.delete()?.addOnCompleteListener {
+
+                    if(it.isSuccessful){
+                        //se ha avuo successo vuol dire che l'email e stata mandata
+                        personNameDelete.setText("")
+
+                        Toast.makeText(this@DeletePersonActivity, "User deleted sussesfully!", Toast.LENGTH_LONG).show()
+
+                        val intent = Intent(this@DeletePersonActivity, MainActivity::class.java)
+                        startActivity(intent)
+
+                        //progressBar.visibility = View.GONE
+
+                    }else{
+                        //progressBar.visibility = View.GONE
+                        Toast.makeText(this@DeletePersonActivity, "Try again! Something wrong happened", Toast.LENGTH_LONG).show()
+                    }
+                }
             }
 
 
