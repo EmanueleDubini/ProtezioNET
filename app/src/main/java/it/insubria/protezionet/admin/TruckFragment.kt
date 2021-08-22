@@ -106,7 +106,7 @@ class TruckFragment : Fragment(), View.OnClickListener {
 
             //salvo il mezzo nel database
             FirebaseDatabase.getInstance().getReference("trucks")
-                .child(targa).setValue(mezzo).addOnCompleteListener {
+                .push().setValue(mezzo).addOnCompleteListener {
                     if (it.isSuccessful) {
                         Toast.makeText(activity, "Truck has been registered sucessfully ", Toast.LENGTH_LONG).show()
                         progressBar.visibility = View.GONE

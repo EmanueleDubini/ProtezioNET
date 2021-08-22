@@ -118,7 +118,7 @@ class EquipmentFragment : Fragment(), View.OnClickListener {
 
             //salvo il mezzo nel database
             FirebaseDatabase.getInstance().getReference("equipment")
-                .child(tipo).setValue(equipaggiamento).addOnCompleteListener {
+                .push().setValue(equipaggiamento).addOnCompleteListener {
                     if (it.isSuccessful) {
                         Toast.makeText(activity, "Equipment has been registered sucessfully ", Toast.LENGTH_LONG).show()
                         progressBar.visibility = View.GONE

@@ -5,19 +5,34 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ProgressBar
+import android.widget.Toast
+import com.google.firebase.database.FirebaseDatabase
+import it.insubria.protezionet.common.Event
+import it.insubria.protezionet.common.Truck
+import kotlinx.android.synthetic.main.fragment_event.*
+import kotlinx.android.synthetic.main.fragment_truck.*
+import kotlinx.android.synthetic.main.fragment_truck.truckType
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 /**
- * A simple [Fragment] subclass.
- * Use the [EventFragment.newInstance] factory method to
- * create an instance of this fragment.
+ * Una sottoclasse di [Fragment].
+ * Utilizza il meotodo [TruckFragment.newInstance] per
+ * generare un istanza di questo fragment.
+ *
+ * Questo fragment rappresenta la schermata dell'applicazione Amministratori che permette di registrare
+ * un evento
  */
-class EventFragment : Fragment() {
+class EventFragment : Fragment(), View.OnClickListener {
     private var param1: String? = null
     private var param2: String? = null
+
+    //istanza utilizzata per gestire la barra di caricamento
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,12 +42,18 @@ class EventFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        val view = inflater.inflate(R.layout.fragment_event, container, false)
+
+        val registerButton: Button = view!!.findViewById(R.id.mRegisterButtonFragmentEvent)//view!!.findViewById(R.id.mRegisterButton)
+        registerButton.setOnClickListener(this)
+
+        //inizializzazione
+        progressBar = view.findViewById(R.id.progressBarFragmentEvent)
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_event, container, false)
+        return view
     }
 
     companion object {
@@ -52,5 +73,56 @@ class EventFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onClick(v: View?) {
+        //viene eseguito quando il bottone progressBarFragmentEvent viene premuto
+
+        val nomeEvento: String = mNameEvent.text.toString().trim().lowercase()
+        val citta: String = mCity.text.toString().trim().lowercase()
+        val severita: String = mSeverita.text.toString().trim().lowercase()
+
+        if (nomeEvento.isEmpty()) { //todo generare le stringhe
+            truckType.error = "Event name is Required"
+            truckType.requestFocus()
+        }
+
+        else if (citta.isEmpty()) {
+            truckPlate.error = "City is Required"
+            truckPlate.requestFocus()
+        }
+
+        else if (severita.isEmpty()) {
+            truckColor.error = "Severity value is Required"
+            truckColor.requestFocus()
+        }
+        else {
+
+            //avvio la progress bar
+            progressBar.visibility = View.VISIBLE
+
+            //se tutte le condizioni non sono valide, vuole dire che i dati inseriti dall'utente sono validi e possiamo effettuare la registrazione di un nuovo evento
+
+            //genero il mezzo da salvare nel database
+            val evento = Event(nomeEvento, citta, severita)
+
+            //salvo il mezzo nel database
+            FirebaseDatabase.getInstance().getReference("event")
+                .push().setValue(evento).addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        Toast.makeText(activity, "Event has been registered sucessfully ", Toast.LENGTH_LONG).show()
+                        progressBar.visibility = View.GONE
+                    }else{
+                        Toast.makeText(activity, "Failed to register! Try again!", Toast.LENGTH_SHORT).show()
+                        progressBar.visibility = View.GONE
+                    }
+                }
+
+            //svuoto i campi scrivibili
+            mNameEvent.setText("")
+            mCity.setText("")
+            mSeverita.setText("")
+        }
+
     }
 }

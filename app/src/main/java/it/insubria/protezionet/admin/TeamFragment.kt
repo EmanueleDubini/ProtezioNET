@@ -146,7 +146,7 @@ class TeamFragment : Fragment(), View.OnClickListener {
                 //leggo tutto quello presente nel campo per specificare il nome del team e inviare al db quello e aggiungendo tutte le persone in teammemberList
 
                 FirebaseDatabase.getInstance().getReference("squadre")
-                    .child(nomeTeam).setValue(team).addOnCompleteListener {
+                    .push().setValue(team).addOnCompleteListener {
                         if (it.isSuccessful) {
                             Toast.makeText(activity, "Team has been registered sucessfully ", Toast.LENGTH_LONG).show()
                             progressBar.visibility = View.GONE
