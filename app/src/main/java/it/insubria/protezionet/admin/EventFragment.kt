@@ -109,8 +109,7 @@ class EventFragment : Fragment(), View.OnClickListener {
             val evento = Event(uniqueId, nomeEvento, citta, severita)
 
             //salvo il mezzo nel database
-            FirebaseDatabase.getInstance().getReference("event")
-                .child(uniqueId).setValue(evento).addOnCompleteListener {
+            eventDBReference.child(uniqueId).setValue(evento).addOnCompleteListener {
                     if (it.isSuccessful) {
                         Toast.makeText(activity, "Event has been registered sucessfully ", Toast.LENGTH_LONG).show()
                         progressBar.visibility = View.GONE

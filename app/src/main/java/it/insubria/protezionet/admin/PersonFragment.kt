@@ -19,6 +19,7 @@ import java.util.*
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+private val personDBReference = FirebaseDatabase.getInstance().getReference("person")
 
 
 /**
@@ -193,8 +194,7 @@ class PersonFragment : Fragment(), View.OnClickListener {
                     val user = Person(currentUser,username, surname, email, password, ruolo)
 
                     //salvo l'utente sul database nel nodo "person"
-                    FirebaseDatabase.getInstance().getReference("person")
-                        .child(currentUser).setValue(user).addOnCompleteListener {
+                    personDBReference.child(currentUser).setValue(user).addOnCompleteListener {
                             if (it.isSuccessful) {
                                 Toast.makeText(activity, "User has been registered sucessfully ", Toast.LENGTH_LONG).show()
                                 progressBar.visibility = View.GONE
