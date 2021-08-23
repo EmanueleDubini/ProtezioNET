@@ -17,6 +17,7 @@ import java.util.*
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+private val teamDBReference = FirebaseDatabase.getInstance().getReference("team")
 
 /**
  * A simple [Fragment] subclass.
@@ -140,13 +141,13 @@ class TeamFragment : Fragment(), View.OnClickListener {
                 val nomeTeam: String = TeamName.text.toString().trim()
 
                 //istanza di team da scrivere nel database
-                val team= Team(nomeTeam, teamMemberList)
+                val uniqueId = teamDBReference.push().key!!
+                val team= Team(uniqueId, nomeTeam, teamMemberList)
 
 
                 //leggo tutto quello presente nel campo per specificare il nome del team e inviare al db quello e aggiungendo tutte le persone in teammemberList
 
-                FirebaseDatabase.getInstance().getReference("squadre")
-                    .push().setValue(team).addOnCompleteListener {
+                teamDBReference.child(uniqueId).setValue(team).addOnCompleteListener {
                         if (it.isSuccessful) {
                             Toast.makeText(activity, "Team has been registered sucessfully ", Toast.LENGTH_LONG).show()
                             progressBar.visibility = View.GONE

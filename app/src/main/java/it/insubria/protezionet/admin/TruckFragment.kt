@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.fragment_truck.*
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+private val truckDBReference = FirebaseDatabase.getInstance().getReference("trucks")
 
 /**
  * Una sottoclasse di [Fragment].
@@ -102,11 +103,11 @@ class TruckFragment : Fragment(), View.OnClickListener {
             //se tutte le condizioni non sono valide, vuole dire che i dati inseriti dall'utente sono validi e possiamo effettuare la registrazione di un nuovo mezzo
 
             //genero il mezzo da salvare nel database
-            val mezzo = Truck(tipo, targa, colore)
+            val uniqueId = truckDBReference.push().key!!
+            val mezzo = Truck(uniqueId, tipo, targa, colore)
 
             //salvo il mezzo nel database
-            FirebaseDatabase.getInstance().getReference("trucks")
-                .push().setValue(mezzo).addOnCompleteListener {
+            truckDBReference.child(uniqueId).setValue(mezzo).addOnCompleteListener {
                     if (it.isSuccessful) {
                         Toast.makeText(activity, "Truck has been registered sucessfully ", Toast.LENGTH_LONG).show()
                         progressBar.visibility = View.GONE

@@ -17,6 +17,7 @@ import java.util.regex.Pattern
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+private val equipmentDBReference = FirebaseDatabase.getInstance().getReference("equipment")
 
 /**
  * A simple [Fragment] subclass.
@@ -114,11 +115,12 @@ class EquipmentFragment : Fragment(), View.OnClickListener {
             val date = Date(chiaveValore[0].toInt(), chiaveValore[1].toInt(), chiaveValore[2].toInt())
 
             //genero il mezzo da salvare nel database
-            val equipaggiamento = Equipment(tipo, date, stato.toInt())
+            val uniqueId = equipmentDBReference.push().key!!
+            val equipaggiamento = Equipment(uniqueId, tipo, date, stato.toInt())
 
             //salvo il mezzo nel database
             FirebaseDatabase.getInstance().getReference("equipment")
-                .push().setValue(equipaggiamento).addOnCompleteListener {
+                .child(uniqueId).setValue(equipaggiamento).addOnCompleteListener {
                     if (it.isSuccessful) {
                         Toast.makeText(activity, "Equipment has been registered sucessfully ", Toast.LENGTH_LONG).show()
                         progressBar.visibility = View.GONE
