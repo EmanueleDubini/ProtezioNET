@@ -104,6 +104,7 @@ class PersonFragment : Fragment(), View.OnClickListener {
     }
 
 
+    @ExperimentalStdlibApi
     override fun onClick(v: View?) {
         when (v!!.id) {
 
@@ -115,6 +116,7 @@ class PersonFragment : Fragment(), View.OnClickListener {
         }
     }
 
+    @ExperimentalStdlibApi
     private fun registraPersona() {
         val username: String = personName.text.toString().trim().lowercase(Locale.getDefault())
         val surname: String = personSurname.text.toString().trim().lowercase(Locale.getDefault())
