@@ -7,7 +7,13 @@
         <entry key="..\:/JetBrainsProgram/AndroidProject/ProtezioNET/app/src/main/res/layout/activity_forgot_password.xml" value="0.13020833333333334" />
         <entry key="..\:/JetBrainsProgram/AndroidProject/ProtezioNET/app/src/main/res/layout/fragment_event.xml" value="0.1" />
         <entry key="..\:/JetBrainsProgram/AndroidProject/ProtezioNET/app/src/main/res/layout/fragment_person.xml" value="0.264" />
+        <entry key="app/src/main/common-res/layout/activity_person.xml" value="0.161231884057971" />
+        <entry key="app/src/main/common-res/layout/activity_splash.xml" value="0.161231884057971" />
         <entry key="app/src/main/res/layout/activity_delete_event.xml" value="0.161231884057971" />
+        <entry key="app/src/main/res/layout/activity_delete_team.xml" value="0.161231884057971" />
+        <entry key="app/src/main/res/layout/activity_delete_truck.xml" value="0.161231884057971" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.161231884057971" />
       </map>
     </option>
   </component>
