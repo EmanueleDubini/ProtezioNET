@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProtezioNET">
         <activity
+            android:name=".DeleteTruckActivity"
+            android:exported="true" />
+        <activity
             android:name=".DeleteEventActivity"
             android:exported="true" />
         <activity
