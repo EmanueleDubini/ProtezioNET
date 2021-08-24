@@ -66,19 +66,19 @@ class DeleteEquipmentActivity : AppCompatActivity() {
             var passwordCurrentUser = getPasswordCurrentUser(emailCurrentUser)*/
 
             //procedo con l'eliminazione della persona specificata dall'utente
-            val equipmentName: String = eventDelete.text.toString().trim()
+            val equipmentName: String = equipmentDelete.text.toString().trim()
 
             if (equipmentName.isEmpty()) {
-                eventDelete.error = "Name of equipment to be deleted required"
-                eventDelete.requestFocus()
+                equipmentDelete.error = "Name of equipment to be deleted required"
+                equipmentDelete.requestFocus()
             }
             //verifico se il nome della persona da eliminare e presente nel database, se è presente mi salvo i suoi dati
             // per poterla eliminare
             val equipaggiamentoDaEliminare: Equipment? = ricercaEquipaggiamento(equipmentName)
             // se personaDaEliminare è null vuol dire che non e stato trovato chi va eliminato
             if (equipaggiamentoDaEliminare == null) {
-                eventDelete.error = "specified equipment does not exist"
-                eventDelete.requestFocus()
+                equipmentDelete.error = "specified equipment does not exist"
+                equipmentDelete.requestFocus()
 
             } else {
                 Toast.makeText(
@@ -91,7 +91,7 @@ class DeleteEquipmentActivity : AppCompatActivity() {
 
                     if (it.isSuccessful) {
                         //se ha avuto successo l'equipaggiamento che si desiderava eliminare è stato tolto
-                        eventDelete.setText("")
+                        equipmentDelete.setText("")
 
                         Toast.makeText(
                             this@DeleteEquipmentActivity,

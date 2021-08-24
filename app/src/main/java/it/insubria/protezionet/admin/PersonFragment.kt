@@ -225,7 +225,6 @@ class PersonFragment : Fragment(), View.OnClickListener {
     private fun deletePersonPanel() {
         val intent = Intent(activity, DeletePersonActivity::class.java)
         startActivity(intent)
-
     }
 
     private fun resetCampiInserimento() {

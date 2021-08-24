@@ -144,6 +144,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/deletePersonTextView" />
 
+    <TextView
+        android:id="@+id/deletePersonTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:text="@string/person_management_panel"
+        android:textColor="#2962FF"
+        app:layout_constraintBottom_toTopOf="@+id/progressBarFragmentPerson"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mRegisterButtonFragmentPerson" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/dropDownRole"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -167,18 +180,5 @@
             android:text="@string/volunteer"
             android:textColor="#757575" />
     </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/deletePersonTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        android:text="@string/person_management_panel"
-        android:textColor="#2962FF"
-        app:layout_constraintBottom_toTopOf="@+id/progressBarFragmentPerson"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mRegisterButtonFragmentPerson" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

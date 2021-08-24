@@ -1,11 +1,13 @@
 package it.insubria.protezionet.admin
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.firebase.database.FirebaseDatabase
@@ -40,11 +42,19 @@ class EquipmentFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         val view = inflater.inflate(R.layout.fragment_equipment, container, false)
 
-        val registerButton: Button = view!!.findViewById(R.id.mRegisterButtonFragmentEquipment)//view!!.findViewById(R.id.mRegisterButton)
+        val registerButton: Button =
+            view!!.findViewById(R.id.mRegisterButtonFragmentEquipment)//view!!.findViewById(R.id.mRegisterButton)
         registerButton.setOnClickListener(this)
+
+        val deleteEquipmentTextView: TextView = view.findViewById(R.id.deleteEquipmentTextView)
+        deleteEquipmentTextView.setOnClickListener(this)
 
         //inizializzazione
         progressBar = view.findViewById(R.id.progressBarFragmentEquipment)
@@ -73,68 +83,19 @@ class EquipmentFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        //viene eseguito quando il bottone mRegisterButtonFragmentEquipment viene premuto
 
-        val tipo: String = equipmentType.text.toString().trim()
-        val stato: String = equipmentState.text.toString().trim()
-        val data: String = equipmentAcquireData.text.toString().trim()
+        when (v!!.id) {
+            //viene eseguito quando il bottone mRegisterButton viene premuto
+            R.id.mRegisterButtonFragmentEquipment -> registraEquipaggiamento()
 
-        if (tipo.isEmpty()) { //todo generare le stringhe
-            equipmentType.error = "Truck type is Required"
-            equipmentType.requestFocus()
+            //viene eseguito quando la textView "deleteEquipmentTextView" viene premuta
+            R.id.deleteEquipmentTextView-> deleteEquipmentPanel()
         }
+    }
 
-        else if (stato.isEmpty()) {
-            equipmentState.error = "Truck plate is Required"
-            equipmentState.requestFocus()
-        }
-
-        else if (stato.toIntOrNull() !is Int || stato.toInt() > 100 || stato.toInt() < 0) {
-            equipmentState.error = "type Equipment state as format from 00 to 100"
-            equipmentState.requestFocus()
-        }
-
-        else if (data.isEmpty()) {
-            equipmentAcquireData.error = "Truck color date is Required"
-            equipmentAcquireData.requestFocus()
-        }
-
-        else if (!isValidDate(data)) {
-            equipmentAcquireData.error = "Date format must be yyyy-mm-dd"
-            equipmentAcquireData.requestFocus()//binding.UsernameField.error = "Invalid Email"                    //editTextUsername.setError("Invalid email")
-        }
-        else {
-
-            //avvio la progress bar
-            progressBar.visibility = View.VISIBLE
-
-            //se tutte le condizioni non sono valide, vuole dire che i dati inseriti dall'utente sono validi e possiamo effettuare la registrazione di un nuovo equipaggiamento
-
-            val chiaveValore: List<String> = data.split("-") // spezzo la stringa letta in due
-
-            val date = Date(chiaveValore[0].toInt(), chiaveValore[1].toInt(), chiaveValore[2].toInt())
-
-            //genero il mezzo da salvare nel database
-            val uniqueId = equipmentDBReference.push().key!!
-            val equipaggiamento = Equipment(uniqueId, tipo, date, stato.toInt())
-
-            //salvo il mezzo nel database
-            equipmentDBReference.child(uniqueId).setValue(equipaggiamento).addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        Toast.makeText(activity, "Equipment has been registered sucessfully ", Toast.LENGTH_LONG).show()
-                        progressBar.visibility = View.GONE
-                    }else{
-                        Toast.makeText(activity, "Failed to register! Try again!", Toast.LENGTH_SHORT).show()
-                        progressBar.visibility = View.GONE
-                    }
-                }
-
-            //svuoto i campi scrivibili
-            equipmentType.setText("")
-            equipmentState.setText("")
-            equipmentAcquireData.setText("")
-        }
-
+    private fun deleteEquipmentPanel() {
+        val intent = Intent(activity, DeleteEquipmentActivity::class.java)
+        startActivity(intent)
     }
 
     private fun isValidDate(date: String): Boolean {
@@ -143,5 +104,66 @@ class EquipmentFragment : Fragment(), View.OnClickListener {
         val pattern = Pattern.compile(datePattern)
         val matcher = pattern.matcher(date)
         return matcher.matches()  //se la data soddisfa la reg-ex ritornerà un valore true altrimenti false
+    }
+
+    private fun registraEquipaggiamento() {
+        //viene eseguito quando il bottone mRegisterButtonFragmentEquipment viene premuto
+
+        val tipo: String = equipmentType.text.toString().trim()
+        val stato: String = equipmentState.text.toString().trim()
+        val data: String = equipmentAcquireData.text.toString().trim()
+
+        if (tipo.isEmpty()) { //todo generare le stringhe
+            equipmentType.error = "Type is Required"
+            equipmentType.requestFocus()
+        } else if (stato.isEmpty()) {
+            equipmentState.error = "State is Required"
+            equipmentState.requestFocus()
+        } else if (stato.toIntOrNull() !is Int || stato.toInt() > 100 || stato.toInt() < 0) {
+            equipmentState.error = "type Equipment state as format from 00 to 100"
+            equipmentState.requestFocus()
+        } else if (data.isEmpty()) {
+            equipmentAcquireData.error = "Date is Required"
+            equipmentAcquireData.requestFocus()
+        } else if (!isValidDate(data)) {
+            equipmentAcquireData.error = "Date format must be yyyy-mm-dd"
+            equipmentAcquireData.requestFocus()//binding.UsernameField.error = "Invalid Email"                    //editTextUsername.setError("Invalid email")
+        } else {
+
+            //avvio la progress bar
+            progressBar.visibility = View.VISIBLE
+
+            //se tutte le condizioni non sono valide, vuole dire che i dati inseriti dall'utente sono validi e possiamo effettuare la registrazione di un nuovo equipaggiamento
+
+            val chiaveValore: List<String> = data.split("-") // spezzo la stringa letta in due
+
+            val date =
+                Date(chiaveValore[0].toInt(), chiaveValore[1].toInt(), chiaveValore[2].toInt())
+
+            //genero il mezzo da salvare nel database
+            val uniqueId = equipmentDBReference.push().key!!
+            val equipaggiamento = Equipment(uniqueId, tipo, date, stato.toInt())
+
+            //salvo il mezzo nel database
+            equipmentDBReference.child(uniqueId).setValue(equipaggiamento).addOnCompleteListener {
+                if (it.isSuccessful) {
+                    Toast.makeText(
+                        activity,
+                        "Equipment has been registered sucessfully ",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    progressBar.visibility = View.GONE
+                } else {
+                    Toast.makeText(activity, "Failed to register! Try again!", Toast.LENGTH_SHORT)
+                        .show()
+                    progressBar.visibility = View.GONE
+                }
+            }
+
+            //svuoto i campi scrivibili
+            equipmentType.setText("")
+            equipmentState.setText("")
+            equipmentAcquireData.setText("")
+        }
     }
 }
