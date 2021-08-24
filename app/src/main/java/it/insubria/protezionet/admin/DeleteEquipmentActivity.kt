@@ -1,11 +1,9 @@
 package it.insubria.protezionet.admin
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import it.insubria.protezionet.common.Equipment
 import kotlinx.android.synthetic.main.activity_delete_equipment.*
@@ -68,19 +66,19 @@ class DeleteEquipmentActivity : AppCompatActivity() {
             var passwordCurrentUser = getPasswordCurrentUser(emailCurrentUser)*/
 
             //procedo con l'eliminazione della persona specificata dall'utente
-            val equipmentName: String = equipmentDelete.text.toString().trim()
+            val equipmentName: String = eventDelete.text.toString().trim()
 
             if (equipmentName.isEmpty()) {
-                equipmentDelete.error = "Name of equipment to be deleted required"
-                equipmentDelete.requestFocus()
+                eventDelete.error = "Name of equipment to be deleted required"
+                eventDelete.requestFocus()
             }
             //verifico se il nome della persona da eliminare e presente nel database, se è presente mi salvo i suoi dati
             // per poterla eliminare
             val equipaggiamentoDaEliminare: Equipment? = ricercaEquipaggiamento(equipmentName)
             // se personaDaEliminare è null vuol dire che non e stato trovato chi va eliminato
             if (equipaggiamentoDaEliminare == null) {
-                equipmentDelete.error = "specified equipment does not exist"
-                equipmentDelete.requestFocus()
+                eventDelete.error = "specified equipment does not exist"
+                eventDelete.requestFocus()
 
             } else {
                 Toast.makeText(
@@ -93,7 +91,7 @@ class DeleteEquipmentActivity : AppCompatActivity() {
 
                     if (it.isSuccessful) {
                         //se ha avuto successo l'equipaggiamento che si desiderava eliminare è stato tolto
-                        equipmentDelete.setText("")
+                        eventDelete.setText("")
 
                         Toast.makeText(
                             this@DeleteEquipmentActivity,

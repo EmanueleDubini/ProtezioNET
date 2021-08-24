@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:id="@+id/equipmentDelete"
+        android:id="@+id/eventDelete"
         android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -66,11 +66,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
-        android:onClick="deleteEquipment"
+        android:onClick="deleteEvent"
         android:text="@string/delete_person"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/equipmentDelete" />
+        app:layout_constraintTop_toBottomOf="@+id/eventDelete" />
 
     <ProgressBar
         android:id="@+id/progressBarDeleteEquipment"
