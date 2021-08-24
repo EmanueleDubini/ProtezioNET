@@ -76,6 +76,7 @@ class EventFragment : Fragment(), View.OnClickListener {
             }
     }
 
+    @ExperimentalStdlibApi
     override fun onClick(v: View?) {
         //viene eseguito quando il bottone progressBarFragmentEvent viene premuto
 
