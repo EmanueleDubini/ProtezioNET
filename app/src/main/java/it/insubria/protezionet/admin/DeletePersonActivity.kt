@@ -1,6 +1,5 @@
 package it.insubria.protezionet.admin
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -63,8 +62,8 @@ class DeletePersonActivity : AppCompatActivity() {
     fun deletePerson(v: View) {
         if (v.id == R.id.deletePersonButton) {
             //salvo quale utente è correntemente loggato
-            /*var emailCurrentUser = FirebaseAuth.getInstance().currentUser?.email
-            var passwordCurrentUser = getPasswordCurrentUser(emailCurrentUser)*/
+            val emailCurrentUser = FirebaseAuth.getInstance().currentUser?.email
+            val passwordCurrentUser = getPasswordCurrentUser(emailCurrentUser)
 
             //procedo con l'eliminazione della persona specificata dall'utente
             val personName: String = personNameDelete.text.toString().trim()
@@ -82,11 +81,6 @@ class DeletePersonActivity : AppCompatActivity() {
                     getString(R.string.specified_person_does_not_exist)      //binding.UsernameField.error = "Invalid Email"                    //editTextUsername.setError("Invalid email")
                 personNameDelete.requestFocus()
             } else {
-                Toast.makeText(
-                    this@DeletePersonActivity,
-                    "la persona esiste, ora va eliminata",
-                    Toast.LENGTH_LONG
-                ).show()
 
                 reference.child(personaDaEliminare.id).removeValue()
                 //firebase authenticator non permette al current user di eliminare altri utenti per ragioni di sicurezza
@@ -109,15 +103,13 @@ class DeletePersonActivity : AppCompatActivity() {
                             Toast.LENGTH_LONG
                         ).show()
 
-                        /*if (emailCurrentUser != null && passwordCurrentUser != null) {
-                            FirebaseAuth.getInstance().signInWithEmailAndPassword(
-                                emailCurrentUser,
-                                passwordCurrentUser
-                            )
-                        }*/
+                        if (emailCurrentUser != null && passwordCurrentUser != null) {
+                            FirebaseAuth.getInstance().signInWithEmailAndPassword(emailCurrentUser, passwordCurrentUser)
+                        }
 
-                        val intent = Intent(this@DeletePersonActivity, MainActivity::class.java)
-                        startActivity(intent)
+
+                        /*val intent = Intent(this@DeletePersonActivity, MainActivity::class.java)
+                        startActivity(intent)*/
 
                         //progressBar.visibility = View.GONE
 
@@ -134,7 +126,8 @@ class DeletePersonActivity : AppCompatActivity() {
         }
     }
 
-    /*private fun getPasswordCurrentUser(emailCurrentUser: String?): String? {
+    @ExperimentalStdlibApi
+    private fun getPasswordCurrentUser(emailCurrentUser: String?): String? {
         for (persona in allpersonReadFromDB) {
             //persona contiene tutti gli oggetti Person presenti sul db
             //scorro tutti gli elementi di allpersonReadFromDatabase, quindi al primo ciclo la variabile persona contiene il primo elemento Person contenuto nell'arraylist allpersonreadFromDB e cosi via
@@ -149,7 +142,7 @@ class DeletePersonActivity : AppCompatActivity() {
             }
         }
         return null
-    }*/
+    }
 
 
     @ExperimentalStdlibApi
