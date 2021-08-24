@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProtezioNET">
         <activity
+            android:name=".DeleteEquipmentActivity"
+            android:exported="true" />
+        <activity
             android:name=".DeletePersonActivity"
             android:exported="true" />
         <activity android:name="it.insubria.protezionet.common.ForgotPassword" />
