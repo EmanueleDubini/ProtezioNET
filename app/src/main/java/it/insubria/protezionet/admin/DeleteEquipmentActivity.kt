@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import it.insubria.protezionet.common.Equipment
+import kotlinx.android.synthetic.main.activity_delete_equipment.*
 import kotlinx.android.synthetic.main.activity_delete_person.*
 import kotlinx.android.synthetic.main.activity_forgot_password.*
 import java.util.*
@@ -60,27 +61,27 @@ class DeleteEquipmentActivity : AppCompatActivity() {
 
     //quando viene premuto il botone di resetPassword
     @ExperimentalStdlibApi
-    fun deletePerson(v: View) {
-        if (v.id == R.id.deletePersonButton) {
+    fun deleteEquipment(v: View) {
+        if (v.id == R.id.deleteEquipmentButton) {
             //salvo quale utente è correntemente loggato
             /*var emailCurrentUser = FirebaseAuth.getInstance().currentUser?.email
             var passwordCurrentUser = getPasswordCurrentUser(emailCurrentUser)*/
 
             //procedo con l'eliminazione della persona specificata dall'utente
-            val personName: String = personNameDelete.text.toString().trim()
+            val equipmentName: String = equipmentDelete.text.toString().trim()
 
-            if (personName.isEmpty()) {
-                personNameDelete.error = getString(R.string.person_name_required)
-                personNameDelete.requestFocus()
+            if (equipmentName.isEmpty()) {
+                equipmentDelete.error = "Name of equipment to be deleted required"
+                equipmentDelete.requestFocus()
             }
             //verifico se il nome della persona da eliminare e presente nel database, se è presente mi salvo i suoi dati
             // per poterla eliminare
-            val personaDaEliminare: Equipment? = ricercaPersona(personName)
+            val equipaggiamentoDaEliminare: Equipment? = ricercaEquipaggiamento(equipmentName)
             // se personaDaEliminare è null vuol dire che non e stato trovato chi va eliminato
-            if (personaDaEliminare == null) {
-                personNameDelete.error =
-                    getString(R.string.specified_person_does_not_exist)      //binding.UsernameField.error = "Invalid Email"                    //editTextUsername.setError("Invalid email")
-                personNameDelete.requestFocus()
+            if (equipaggiamentoDaEliminare == null) {
+                equipmentDelete.error = "specified equipment does not exist"
+                equipmentDelete.requestFocus()
+
             } else {
                 Toast.makeText(
                     this@DeleteEquipmentActivity,
@@ -88,38 +89,17 @@ class DeleteEquipmentActivity : AppCompatActivity() {
                     Toast.LENGTH_LONG
                 ).show()
 
-                reference.child(personaDaEliminare.id).removeValue()
-                //firebase authenticator non permette al current user di eliminare altri utenti per ragioni di sicurezza
-                //si potrebbe fare solamente utilizzando il databse in modo da avere account amministratori o account normali.
-                // quindi per eliminare una persona dalla sezione firebase authenticator bisogna accedere con il profilo di quella persona e eliminare il proprio account
-                FirebaseAuth.getInstance().signInWithEmailAndPassword(
-                    personaDaEliminare.id,
-                    personaDaEliminare.tipo
-                )
-
-                FirebaseAuth.getInstance().currentUser?.delete()?.addOnCompleteListener {
+                reference.child(equipaggiamentoDaEliminare.id).removeValue().addOnCompleteListener(){
 
                     if (it.isSuccessful) {
-                        //se ha avuo successo vuol dire che l'email e stata mandata
-                        personNameDelete.setText("")
+                        //se ha avuto successo l'equipaggiamento che si desiderava eliminare è stato tolto
+                        equipmentDelete.setText("")
 
                         Toast.makeText(
                             this@DeleteEquipmentActivity,
-                            "User deleted sussesfully!",
+                            "Equipment deleted sussesfully!",
                             Toast.LENGTH_LONG
                         ).show()
-
-                        /*if (emailCurrentUser != null && passwordCurrentUser != null) {
-                            FirebaseAuth.getInstance().signInWithEmailAndPassword(
-                                emailCurrentUser,
-                                passwordCurrentUser
-                            )
-                        }*/
-
-                        val intent = Intent(this@DeleteEquipmentActivity, MainActivity::class.java)
-                        startActivity(intent)
-
-                        //progressBar.visibility = View.GONE
 
                     } else {
                         //progressBar.visibility = View.GONE
@@ -130,6 +110,7 @@ class DeleteEquipmentActivity : AppCompatActivity() {
                         ).show()
                     }
                 }
+
             }
         }
     }
@@ -137,12 +118,12 @@ class DeleteEquipmentActivity : AppCompatActivity() {
 
 
     @ExperimentalStdlibApi
-    private fun ricercaPersona(personNameDelete: String): Equipment? {
+    private fun ricercaEquipaggiamento(EquipmentDelete: String): Equipment? {
         for (equipment in allEquipmentReadFromDB) {
             //persona contiene tutti gli oggetti Person presenti sul db
             //scorro tutti gli elementi di allpersonReadFromDatabase, quindi al primo ciclo la variabile persona contiene il primo elemento Person contenuto nell'arraylist allpersonreadFromDB e cosi via
 
-            if (equipment.tipo.lowercase(Locale.getDefault()) == personNameDelete.lowercase(Locale.getDefault())) {
+            if (equipment.tipo.lowercase(Locale.getDefault()) == EquipmentDelete.lowercase(Locale.getDefault())) {
                 return equipment
             }
         }
