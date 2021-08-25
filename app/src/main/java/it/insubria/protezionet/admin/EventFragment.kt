@@ -1,5 +1,6 @@
 package it.insubria.protezionet.admin
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.database.FirebaseDatabase
 import it.insubria.protezionet.common.Event
@@ -49,6 +51,9 @@ class EventFragment : Fragment(), View.OnClickListener {
         val registerButton: Button = view!!.findViewById(R.id.mRegisterButtonFragmentEvent)//view!!.findViewById(R.id.mRegisterButton)
         registerButton.setOnClickListener(this)
 
+        val deleteEventTextView: TextView = view.findViewById(R.id.deleteEventTextView)
+        deleteEventTextView.setOnClickListener(this)
+
         //inizializzazione
         progressBar = view.findViewById(R.id.progressBarFragmentEvent)
 
@@ -77,8 +82,21 @@ class EventFragment : Fragment(), View.OnClickListener {
 
     @ExperimentalStdlibApi
     override fun onClick(v: View?) {
-        //viene eseguito quando il bottone progressBarFragmentEvent viene premuto
+        when (v!!.id) {
+            //viene eseguito quando il bottone mRegisterButton viene premuto
+            R.id.mRegisterButtonFragmentEvent -> registraEvento()
 
+            //viene eseguito quando la textView "deleteEquipmentTextView" viene premuta
+            R.id.deleteEventTextView-> deleteEventPanel()
+        }
+    }
+
+    private fun deleteEventPanel() {
+        val intent = Intent(activity, DeleteEventActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun registraEvento() {
         val nomeEvento: String = mNameEvent.text.toString().trim().lowercase()
         val citta: String = mCity.text.toString().trim().lowercase()
         val severita: String = mSeverita.text.toString().trim().lowercase()
@@ -110,20 +128,19 @@ class EventFragment : Fragment(), View.OnClickListener {
 
             //salvo il mezzo nel database
             eventDBReference.child(uniqueId).setValue(evento).addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        Toast.makeText(activity, "Event has been registered sucessfully ", Toast.LENGTH_LONG).show()
-                        progressBar.visibility = View.GONE
-                    }else{
-                        Toast.makeText(activity, "Failed to register! Try again!", Toast.LENGTH_SHORT).show()
-                        progressBar.visibility = View.GONE
-                    }
+                if (it.isSuccessful) {
+                    Toast.makeText(activity, "Event has been registered sucessfully ", Toast.LENGTH_LONG).show()
+                    progressBar.visibility = View.GONE
+                }else{
+                    Toast.makeText(activity, "Failed to register! Try again!", Toast.LENGTH_SHORT).show()
+                    progressBar.visibility = View.GONE
                 }
+            }
 
             //svuoto i campi scrivibili
             mNameEvent.setText("")
             mCity.setText("")
             mSeverita.setText("")
         }
-
     }
 }

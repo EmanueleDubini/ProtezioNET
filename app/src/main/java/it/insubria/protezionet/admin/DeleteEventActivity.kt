@@ -89,7 +89,7 @@ class DeleteEventActivity : AppCompatActivity() {
 
                     if (it.isSuccessful) {
                         //se ha avuto successo l'equipaggiamento che si desiderava eliminare è stato tolto
-                        equipmentDelete.setText("")
+                        eventDelete.setText("")
 
                         Toast.makeText(
                             this@DeleteEventActivity,
@@ -114,12 +114,12 @@ class DeleteEventActivity : AppCompatActivity() {
 
 
     @ExperimentalStdlibApi
-    private fun ricercaEvent(EquipmentDelete: String): Event? {
+    private fun ricercaEvent(EventDelete: String): Event? {
         for (event in allEventReadFromDB) {
             //persona contiene tutti gli oggetti Person presenti sul db
             //scorro tutti gli elementi di allpersonReadFromDatabase, quindi al primo ciclo la variabile persona contiene il primo elemento Person contenuto nell'arraylist allpersonreadFromDB e cosi via
 
-            if (event.id.lowercase(Locale.getDefault()) == EquipmentDelete.lowercase(Locale.getDefault())) {
+            if (event.tipo.lowercase(Locale.getDefault()) == EventDelete.lowercase(Locale.getDefault())) {
                 return event
             }
         }
