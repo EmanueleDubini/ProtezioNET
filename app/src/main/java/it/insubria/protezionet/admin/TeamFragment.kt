@@ -1,5 +1,6 @@
 package it.insubria.protezionet.admin
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -71,6 +72,9 @@ class TeamFragment : Fragment(), View.OnClickListener {
         buttonAdd.setOnClickListener(this)
         buttonSubmitList.setOnClickListener(this)
 
+        val deleteTeamTextView: TextView = view.findViewById(R.id.deleteTeamTextView)
+        deleteTeamTextView.setOnClickListener(this)
+
         //inizializzazione del riferimento dell'oggetto alla progressbar
         progressBar = view.findViewById(R.id.progressBarFragmentTeam)
 
@@ -132,6 +136,8 @@ class TeamFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.button_add -> addView()
+            //viene eseguito quando la textView "deleteTeamTextView" viene premuta
+            R.id.deleteTeamTextView-> deleteTeamPanel()
             R.id.mRegisterButtonTeam -> if (checkIfValidAndRead()) {
 
                 //avvio la progress bar
@@ -171,6 +177,11 @@ class TeamFragment : Fragment(), View.OnClickListener {
         }
 
 
+    }
+
+    private fun deleteTeamPanel() {
+        val intent = Intent(activity, DeleteTeamActivity::class.java)
+        startActivity(intent)
     }
 
     private fun resetCampiInserimento() {
@@ -274,7 +285,7 @@ class TeamFragment : Fragment(), View.OnClickListener {
         val imageClose = teamMemberView.findViewById<View>(R.id.image_remove) as ImageView //tasto per rimuovere la riga
 
 
-        spinnerTeam.adapter = ArrayAdapter(activity!!, android.R.layout.simple_spinner_item, teamList) //adapter per inserire le possibili scelte nel dropDownMenu
+        spinnerTeam.adapter = ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_item, teamList) //adapter per inserire le possibili scelte nel dropDownMenu
 
         imageClose.setOnClickListener { removeView(teamMemberView) } //rimuove la riga se premuto
 

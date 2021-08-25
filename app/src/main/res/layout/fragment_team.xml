@@ -13,7 +13,9 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="148dp"
+        android:layout_marginBottom="3dp"
         android:contentDescription="@string/protezionet_logo"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -23,7 +25,6 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
         android:fontFamily="@font/allerta"
         android:text="@string/register_a_new_team"
         android:textAlignment="center"
@@ -33,9 +34,9 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintHorizontal_bias="0.07"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <TextView
         android:id="@+id/textView2"
@@ -53,18 +54,25 @@
         android:layout_width="175dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:layout_marginBottom="5dp"
         android:ems="10"
         android:hint="@string/team_name"
         android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/layout_list"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <LinearLayout
         android:id="@+id/layout_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="8dp"
+        android:isScrollContainer="true"
+        android:nestedScrollingEnabled="true"
         android:orientation="vertical"
+        android:overScrollMode="always"
+        android:scrollbarAlwaysDrawHorizontalTrack="false"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TeamName" />
@@ -73,6 +81,9 @@
         android:id="@+id/button_add"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="32dp"
         android:background="@drawable/round_primary"
         android:drawableRight="@drawable/ic_add"
         android:paddingLeft="10dp"
@@ -80,35 +91,55 @@
         android:text="Add"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/mRegisterButtonTeam"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.12"
+        app:layout_constraintBottom_toTopOf="@+id/deleteTeamTextView"
+        app:layout_constraintEnd_toStartOf="@+id/mRegisterButtonTeam"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_list"
-        app:layout_constraintVertical_bias="0.19" />
+        app:layout_constraintTop_toBottomOf="@+id/layout_list" />
 
     <Button
         android:id="@+id/mRegisterButtonTeam"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="18dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="12dp"
         android:text="@string/register_a_new_team"
         app:layout_constraintBottom_toTopOf="@+id/progressBarFragmentTeam"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.862"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_list" />
 
     <ProgressBar
         android:id="@+id/progressBarFragmentTeam"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="40dp"
         android:progressTint="#FF0000"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.316"
+        app:layout_constraintStart_toEndOf="@+id/deleteTeamTextView"
+        app:layout_constraintTop_toBottomOf="@+id/mRegisterButtonTeam" />
+
+    <TextView
+        android:id="@+id/deleteTeamTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="60dp"
+        android:gravity="center_vertical"
+        android:minHeight="48dp"
+        android:text="@string/event_management_panel"
+        android:textColor="#2962FF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/progressBarFragmentTeam"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mRegisterButtonTeam"
+        app:layout_constraintVertical_bias="0.032" />
 
     <!-- RUOLE -->
 

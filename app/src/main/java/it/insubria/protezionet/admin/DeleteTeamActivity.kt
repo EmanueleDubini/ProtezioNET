@@ -71,29 +71,24 @@ class DeleteTeamActivity : AppCompatActivity() {
             val teamName: String = teamDelete.text.toString().trim()
 
             if (teamName.isEmpty()) {
-                teamDelete.error = "Name of equipment to be deleted required"
+                teamDelete.error = "Name of team to be deleted required"
                 teamDelete.requestFocus()
             }
             //verifico se il nome della persona da eliminare e presente nel database, se è presente mi salvo i suoi dati
             // per poterla eliminare
-            val teamDaEliminare: Team? = ricercaEquipaggiamento(teamName)
+            val teamDaEliminare: Team? = ricercaTeam(teamName)
             // se personaDaEliminare è null vuol dire che non e stato trovato chi va eliminato
             if (teamDaEliminare == null) {
                 teamDelete.error = "specified team does not exist"
                 teamDelete.requestFocus()
 
             } else {
-                Toast.makeText(
-                    this@DeleteTeamActivity,
-                    "la team esiste, ora va eliminata",
-                    Toast.LENGTH_LONG
-                ).show()
 
                 reference.child(teamDaEliminare.id).removeValue().addOnCompleteListener(){
 
                     if (it.isSuccessful) {
                         //se ha avuto successo l'equipaggiamento che si desiderava eliminare è stato tolto
-                        equipmentDelete.setText("")
+                        teamDelete.setText("")
 
                         Toast.makeText(
                             this@DeleteTeamActivity,
@@ -118,12 +113,12 @@ class DeleteTeamActivity : AppCompatActivity() {
 
 
     @ExperimentalStdlibApi
-    private fun ricercaEquipaggiamento(EquipmentDelete: String): Team? {
+    private fun ricercaTeam(teamDelete: String): Team? {
         for (team in allTeamReadFromDB) {
             //persona contiene tutti gli oggetti Person presenti sul db
             //scorro tutti gli elementi di allpersonReadFromDatabase, quindi al primo ciclo la variabile persona contiene il primo elemento Person contenuto nell'arraylist allpersonreadFromDB e cosi via
 
-            if (team.id.lowercase(Locale.getDefault()) == EquipmentDelete.lowercase(Locale.getDefault())) {
+            if (team.nomeSquadra.lowercase(Locale.getDefault()) == teamDelete.lowercase(Locale.getDefault())) {
                 return team
             }
         }
