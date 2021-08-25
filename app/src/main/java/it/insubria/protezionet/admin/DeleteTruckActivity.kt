@@ -5,11 +5,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.*
-import it.insubria.protezionet.common.Equipment
-import it.insubria.protezionet.common.Team
 import it.insubria.protezionet.common.Truck
 import kotlinx.android.synthetic.main.activity_delete_equipment.*
-import kotlinx.android.synthetic.main.activity_delete_equipment.equipmentDelete
 import kotlinx.android.synthetic.main.activity_delete_person.*
 import kotlinx.android.synthetic.main.activity_delete_team.*
 import kotlinx.android.synthetic.main.activity_delete_team.teamDelete
