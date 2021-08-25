@@ -10,7 +10,6 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import com.google.firebase.database.FirebaseDatabase
 import it.insubria.protezionet.common.Event
-import it.insubria.protezionet.common.Truck
 import kotlinx.android.synthetic.main.fragment_event.*
 import kotlinx.android.synthetic.main.fragment_truck.*
 import kotlinx.android.synthetic.main.fragment_truck.truckType
