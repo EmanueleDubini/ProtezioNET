@@ -50,12 +50,12 @@ class HomeFragment : Fragment(), View.OnClickListener {
         val signOut: Button = view!!.findViewById(R.id.signOutButton) //view!!.findViewById(R.id.mRegisterButton)
         signOut.setOnClickListener(this)
 
-        user = FirebaseAuth.getInstance().currentUser!!
+        /*user = FirebaseAuth.getInstance().currentUser!!
         reference = FirebaseDatabase.getInstance().getReference("person") //rifermento al nodo person da cui leggere
-        userID = user.uid
+        userID = user.uid*/
 
 
-        //preleviamo i dati da firebase
+        /*//preleviamo i dati da firebase
         reference.child(userID).addListenerForSingleValueEvent(object : ValueEventListener {
 
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -80,7 +80,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 Toast.makeText(activity, "Something wrong happened!", Toast.LENGTH_LONG).show()
 
             }
-        })
+        })*/
 
         return view
     }

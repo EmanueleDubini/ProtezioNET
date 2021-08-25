@@ -1,5 +1,6 @@
 package it.insubria.protezionet.admin
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.database.FirebaseDatabase
 import it.insubria.protezionet.common.Truck
@@ -15,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_truck.*
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
-private val truckDBReference = FirebaseDatabase.getInstance().getReference("trucks")
+private val truckDBReference = FirebaseDatabase.getInstance().getReference("truck")
 
 /**
  * Una sottoclasse di [Fragment].
@@ -48,8 +50,11 @@ class TruckFragment : Fragment(), View.OnClickListener {
         val registerButton: Button = view!!.findViewById(R.id.mRegisterButtonFragmentTruck)//view!!.findViewById(R.id.mRegisterButton)
         registerButton.setOnClickListener(this)
 
+        val deleteTruckTextView: TextView = view.findViewById(R.id.deleteTruckTextView)
+        deleteTruckTextView.setOnClickListener(this)
+
         //inizializzazione
-        progressBar = view.findViewById(R.id.progressBarFragmentPerson)
+        progressBar = view.findViewById(R.id.progressBarFragmentTruck)
 
         // Inflate the layout for this fragment
         return view
@@ -75,8 +80,23 @@ class TruckFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        //viene eseguito quando il bottone mRegisterButtonFragmentTruck viene premuto
 
+        when (v!!.id) {
+            //viene eseguito quando il bottone mRegisterButton viene premuto
+            R.id.mRegisterButtonFragmentTruck -> registraMezzo()
+
+            //viene eseguito quando la textView "deleteEquipmentTextView" viene premuta
+            R.id.deleteTruckTextView-> deleteTruckPanel()
+        }
+    }
+
+    private fun deleteTruckPanel() {
+        val intent = Intent(activity, DeleteTruckActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun registraMezzo() {
+        //viene eseguito quando il bottone mRegisterButtonFragmentTruck viene premuto
         val tipo: String = truckType.text.toString().trim()
         val targa: String = truckPlate.text.toString().trim()
         val colore: String = truckColor.text.toString().trim()
@@ -108,20 +128,19 @@ class TruckFragment : Fragment(), View.OnClickListener {
 
             //salvo il mezzo nel database
             truckDBReference.child(uniqueId).setValue(mezzo).addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        Toast.makeText(activity, "Truck has been registered sucessfully ", Toast.LENGTH_LONG).show()
-                        progressBar.visibility = View.GONE
-                    }else{
-                        Toast.makeText(activity, "Failed to register! Try again!", Toast.LENGTH_SHORT).show()
-                        progressBar.visibility = View.GONE
-                    }
+            if (it.isSuccessful) {
+                    Toast.makeText(activity, "Truck has been registered sucessfully ", Toast.LENGTH_LONG).show()
+                    progressBar.visibility = View.GONE
+                }else{
+                    Toast.makeText(activity, "Failed to register! Try again!", Toast.LENGTH_SHORT).show()
+                    progressBar.visibility = View.GONE
                 }
+            }
 
             //svuoto i campi scrivibili
             truckType.setText("")
             truckPlate.setText("")
             truckColor.setText("")
         }
-
     }
 }
