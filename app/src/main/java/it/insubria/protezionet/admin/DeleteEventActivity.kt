@@ -27,7 +27,7 @@ class DeleteEventActivity : AppCompatActivity() {
         setContentView(R.layout.activity_delete_event)
 
         //rifermento al nodo person da cui leggere i dati dei volontari presenti nel database
-        reference = FirebaseDatabase.getInstance().getReference("team")
+        reference = FirebaseDatabase.getInstance().getReference("event")
 
         //preleviamo i dati da firebase per mostrarli nel dropDownMenu
         reference.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -73,8 +73,8 @@ class DeleteEventActivity : AppCompatActivity() {
             val eventName: String = eventDelete.text.toString().trim()
 
             if (eventName.isEmpty()) {
-                teamDelete.error = "Name of event to be deleted required"
-                teamDelete.requestFocus()
+                eventDelete.error = "Name of event to be deleted required"
+                eventDelete.requestFocus()
             }
             //verifico se il nome della persona da eliminare e presente nel database, se è presente mi salvo i suoi dati
             // per poterla eliminare
@@ -85,12 +85,6 @@ class DeleteEventActivity : AppCompatActivity() {
                 eventDelete.requestFocus()
 
             } else {
-                Toast.makeText(
-                    this@DeleteEventActivity,
-                    "la event esiste, ora va eliminata",
-                    Toast.LENGTH_LONG
-                ).show()
-
                 reference.child(eventDaEliminare.id).removeValue().addOnCompleteListener(){
 
                     if (it.isSuccessful) {

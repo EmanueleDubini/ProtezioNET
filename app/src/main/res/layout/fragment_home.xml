@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".HomeFragment">
 
-    <TextView
+    <!-- <TextView
         android:id="@+id/greeting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -103,7 +103,7 @@
         app:layout_constraintLeft_toLeftOf="@id/surnameTitle"
         android:layout_marginLeft="30dp"
         android:textSize="20sp"
-        />
+        />-->
 
     <Button
         android:id="@+id/signOutButton"
