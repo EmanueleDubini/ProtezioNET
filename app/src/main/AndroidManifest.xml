@@ -12,13 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProtezioNET">
         <activity
+            android:name=".DeleteEventActivity"
+            android:exported="true" />
+        <activity
             android:name=".DeleteTeamActivity"
             android:exported="true" />
         <activity
             android:name=".DeleteTruckActivity"
-            android:exported="true" />
-        <activity
-            android:name=".DeleteEventActivity"
             android:exported="true" />
         <activity
             android:name=".DeleteEquipmentActivity"
