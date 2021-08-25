@@ -44,9 +44,8 @@ class DeleteTruckActivity : AppCompatActivity() {
                     val cognome = dSnapshot.child("cognome").getValue(String::class.java)
                     val ruolo = dSnapshot.child("ruolo").getValue(String::class.java)*/
 
-                    //aggiunta dei possibili vigili del fuoco con cui si puo formare un team, verranno mostrati poi nel dropdown menu
+                    //aggiunta dei possibili vigili del fuoco con cui si puo formare un truck, verranno mostrati poi nel dropdown menu
                     if (truck != null) {
-                        //teamList.add("${person.nome} ${person.cognome} - ${person.ruolo}")
                         allTruckReadFromDB.add(truck)
                     }
                 }
@@ -72,7 +71,7 @@ class DeleteTruckActivity : AppCompatActivity() {
             var passwordCurrentUser = getPasswordCurrentUser(emailCurrentUser)*/
 
             //procedo con l'eliminazione della persona specificata dall'utente
-            val truckName: String = truckDelete.text.toString().trim()
+            val truckName: String = truckDelete.text.toString()
 
             if (truckName.isEmpty()) {
                 truckDelete.error = "Name of truck to be deleted required"
@@ -83,16 +82,10 @@ class DeleteTruckActivity : AppCompatActivity() {
             val truckDaEliminare: Truck? = ricercaTruck(truckName)
             // se personaDaEliminare è null vuol dire che non e stato trovato chi va eliminato
             if (truckDaEliminare == null) {
-                teamDelete.error = "specified team does not exist"
-                teamDelete.requestFocus()
+                truckDelete.error = "specified truck does not exist"
+                truckDelete.requestFocus()
 
             } else {
-                Toast.makeText(
-                    this@DeleteTruckActivity,
-                    "la team esiste, ora va eliminata",
-                    Toast.LENGTH_LONG
-                ).show()
-
                 reference.child(truckDaEliminare.id).removeValue().addOnCompleteListener(){
 
                     if (it.isSuccessful) {
@@ -127,7 +120,7 @@ class DeleteTruckActivity : AppCompatActivity() {
             //persona contiene tutti gli oggetti Person presenti sul db
             //scorro tutti gli elementi di allpersonReadFromDatabase, quindi al primo ciclo la variabile persona contiene il primo elemento Person contenuto nell'arraylist allpersonreadFromDB e cosi via
 
-            if (truck.id.lowercase(Locale.getDefault()) == TruckDelete.lowercase(Locale.getDefault())) {
+            if (truck.tipo.lowercase(Locale.getDefault()) == TruckDelete.lowercase(Locale.getDefault())) {
                 return truck
             }
         }
