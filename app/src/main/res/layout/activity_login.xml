@@ -6,7 +6,7 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:padding="8dp"
-    tools:context="it.insubria.protezionet.admin.PersonActivity">
+    tools:context="it.insubria.protezionet.admin.PersonFragment">
 
     <TextView
         android:id="@+id/textView6"
